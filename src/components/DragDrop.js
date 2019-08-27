@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import Dropzone from "react-dropzone";
+import FileList from "./FileList";
+import BackupIcon from "@material-ui/icons/Backup";
 
 class DragDrop extends Component {
   state = {
@@ -20,35 +22,43 @@ class DragDrop extends Component {
     });
   };
   render() {
-    const dropZoneStyle = {
-      position: "fixed",
-      width: "200px",
-      height: "200px",
+    const iconStyle = {
+      //position: "absolute",
+      width: "100px",
+      height: "100px",
       top: "0",
       left: "0",
-      right: "0",
       bottom: "0",
+      right: "0",
       margin: "auto",
-      border: "2px solid red"
+      color: "blue"
     };
+
+    const wrapper = {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      minHeight: "100vh"
+    };
+
     return (
-      <Dropzone onDrop={this.handleDrop}>
-        {({ getRootProps, getInputProps }) => (
-          <section style={dropZoneStyle}>
-            <div {...getRootProps()}>
-              <input {...getInputProps()} />
-              <p>Drag 'n' drop some files here, or click to select files</p>
-            </div>
-            <ul>
-              {this.state.files.map(file => (
-                <li onClick={() => this.deleteFile(file.path)} key={file.path}>
-                  {file.name}
-                </li>
-              ))}
-            </ul>
-          </section>
-        )}
-      </Dropzone>
+      <div style={wrapper}>
+        <Dropzone onDrop={this.handleDrop}>
+          {({ getRootProps, getInputProps }) => (
+            <section>
+              <div
+                style={{ display: "flex", flexDirection: "column" }}
+                {...getRootProps()}
+              >
+                <input {...getInputProps()} />
+                Drag 'n' drop some files here, or click to select files
+                <BackupIcon style={iconStyle} />
+              </div>
+              <FileList files={this.state.files} deleteFile={this.deleteFile} />
+            </section>
+          )}
+        </Dropzone>
+      </div>
     );
   }
 }
