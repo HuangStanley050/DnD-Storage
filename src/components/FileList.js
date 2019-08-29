@@ -14,8 +14,7 @@ import IconButton from "@material-ui/core/IconButton";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1,
-    maxWidth: 752
+    width: "100%"
   },
   demo: {
     backgroundColor: "#fafafa"
@@ -32,33 +31,31 @@ const FileList = props => {
 
   return (
     <div className={classes.root}>
-      <Grid container>
-        <Grid item xs={12} md={6}>
-          <Typography variant="h6" className={classes.title}>
-            Avatar with text and icon
-          </Typography>
-          <div className={classes.demo}>
-            <List dense={dense}>
-              <ListItem>
-                <ListItemAvatar>
-                  <Avatar>
-                    <FolderIcon />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText
-                  primary="Single-line item"
-                  secondary={secondary ? "Secondary text" : null}
-                />
-                <ListItemSecondaryAction>
-                  <IconButton edge="end" aria-label="delete">
-                    <DeleteIcon />
-                  </IconButton>
-                </ListItemSecondaryAction>
-              </ListItem>
-            </List>
-          </div>
-        </Grid>
-      </Grid>
+      <div className={classes.demo}>
+        {props.files.length === 0 ? null : (
+          <List dense={dense}>
+            {props.files.map(file => {
+              return (
+                <ListItem key={file.path}>
+                  <ListItemAvatar>
+                    <Avatar>
+                      <FolderIcon />
+                    </Avatar>
+                  </ListItemAvatar>
+                  <ListItemText primary={file.name} />
+                  <ListItemSecondaryAction>
+                    <IconButton edge="end" aria-label="delete">
+                      <DeleteIcon
+                        onClick={() => props.deleteFile(file.path)}
+                      ></DeleteIcon>
+                    </IconButton>
+                  </ListItemSecondaryAction>
+                </ListItem>
+              );
+            })}
+          </List>
+        )}
+      </div>
     </div>
   );
 };
