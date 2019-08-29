@@ -44,10 +44,12 @@ const FileList = props => {
                   </ListItemAvatar>
                   <ListItemText primary={file.name} />
                   <ListItemSecondaryAction>
-                    <IconButton edge="end" aria-label="delete">
-                      <DeleteIcon
-                        onClick={() => props.deleteFile(file.path)}
-                      ></DeleteIcon>
+                    <IconButton
+                      onClick={() => props.deleteFile(file.path)}
+                      edge="end"
+                      aria-label="delete"
+                    >
+                      <DeleteIcon></DeleteIcon>
                     </IconButton>
                   </ListItemSecondaryAction>
                 </ListItem>
@@ -61,11 +63,3 @@ const FileList = props => {
 };
 
 export default FileList;
-
-// <ul>
-//   {props.files.map(file => (
-//     <li onClick={() => props.deleteFile(file.path)} key={file.path}>
-//       {file.name}
-//     </li>
-//   ))}
-// </ul>

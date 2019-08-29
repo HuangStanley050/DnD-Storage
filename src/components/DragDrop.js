@@ -26,6 +26,7 @@ class DragDrop extends Component {
       //position: "absolute",
       width: "100px",
       height: "100px",
+
       top: "0",
       left: "0",
       bottom: "0",
@@ -36,9 +37,14 @@ class DragDrop extends Component {
 
     const wrapper = {
       display: "flex",
+      position: "fixed",
       justifyContent: "center",
       alignItems: "center",
-      minHeight: "100vh"
+      top: "0",
+      left: "0",
+      bottom: "0",
+      right: "0",
+      margin: "0 auto"
     };
 
     return (
