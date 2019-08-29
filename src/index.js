@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import { BrowserRouter as Router } from "react-router-dom";
+//import { MemoryRouter as Router } from "react-router";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 

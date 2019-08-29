@@ -9,7 +9,7 @@ import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
-import Link from "@material-ui/core/Link";
+//import Link from "@material-ui/core/Link";
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -34,10 +34,12 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1
   }
 }));
-const AdapterLink = React.forwardRef((props, ref) => (
-  <Link innerRef={ref} {...props} />
-));
-export default function ButtonAppBar() {
+const AdapterLink = React.forwardRef((props, ref) => {
+  console.log("props====>", props);
+  console.log("ref====>", ref);
+  return <RouterLink innerRef={ref} {...props} />;
+});
+const Navbar = props => {
   const classes = useStyles();
 
   return (
@@ -52,12 +54,22 @@ export default function ButtonAppBar() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" className={classes.title}>
+
+          <Typography
+            style={{
+              textDecoration: "none",
+              color: "white"
+            }}
+            component={AdapterLink}
+            to="/"
+            variant="h6"
+            className={classes.title}
+          >
             File Uploader
           </Typography>
 
           <Button
-            component={RouterLink}
+            component={AdapterLink}
             to="/store"
             variant="contained"
             className={classes.button}
@@ -67,7 +79,7 @@ export default function ButtonAppBar() {
           </Button>
 
           <Button
-            component={RouterLink}
+            component={AdapterLink}
             to="/login"
             variant="contained"
             className={classes.button}
@@ -79,4 +91,6 @@ export default function ButtonAppBar() {
       </AppBar>
     </div>
   );
-}
+};
+
+export default Navbar;
