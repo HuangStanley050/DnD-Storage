@@ -22,6 +22,7 @@ class DragDrop extends Component {
     });
   };
   render() {
+    console.log("This is from drag and drop====>", this.props);
     const iconStyle = {
       //position: "absolute",
       width: "100px",
@@ -37,7 +38,8 @@ class DragDrop extends Component {
 
     const wrapper = {
       display: "flex",
-      position: "fixed",
+      minHeight: "100vh",
+      //position: "fixed", //======================> this caused the issue with routing, don't know why
       justifyContent: "center",
       alignItems: "center",
       top: "0",

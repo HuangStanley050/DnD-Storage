@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
+//import Grid from "@material-ui/core/Grid";
+//import Typography from "@material-ui/core/Typography";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";

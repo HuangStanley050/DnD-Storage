@@ -9,6 +9,9 @@ import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
+import DescriptionIcon from "@material-ui/icons/Description";
+import ExitIcon from "@material-ui/icons/ExitToApp";
+
 //import Link from "@material-ui/core/Link";
 
 const useStyles = makeStyles(theme => ({
@@ -35,7 +38,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 const AdapterLink = React.forwardRef((props, ref) => {
-  console.log("props====>", props);
+  //console.log("props====>", props);
   console.log("ref====>", ref);
   return <RouterLink innerRef={ref} {...props} />;
 });
@@ -69,6 +72,9 @@ const Navbar = props => {
           </Typography>
 
           <Button
+            onClick={() => {
+              console.log("clicked");
+            }}
             component={AdapterLink}
             to="/store"
             variant="contained"
@@ -79,6 +85,9 @@ const Navbar = props => {
           </Button>
 
           <Button
+            onClick={() => {
+              console.log("clicked");
+            }}
             component={AdapterLink}
             to="/login"
             variant="contained"
@@ -86,6 +95,22 @@ const Navbar = props => {
           >
             <PersonIcon />
             Login
+          </Button>
+          <Button
+            onClick={() => {
+              console.log("clicked");
+            }}
+            variant="contained"
+            component={AdapterLink}
+            to="/dashboard"
+            className={classes.button}
+          >
+            <DescriptionIcon />
+            Dashboard
+          </Button>
+          <Button variant="contained" className={classes.button}>
+            <ExitIcon />
+            Log out
           </Button>
         </Toolbar>
       </AppBar>
