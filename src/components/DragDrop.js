@@ -36,7 +36,7 @@ class DragDrop extends Component {
 
     const wrapper = {
       display: "flex",
-      minHeight: "60vh",
+      minHeight: "100vh",
       //position: "fixed", //======================> this caused the issue with routing, don't know why
       justifyContent: "center",
       alignItems: "center",
@@ -49,25 +49,25 @@ class DragDrop extends Component {
     };
 
     return (
-      <>
-        <div style={wrapper}>
+      <div style={wrapper}>
+        <div style={{ height: "200px" }}>
           <Dropzone onDrop={this.handleDrop}>
             {({ getRootProps, getInputProps }) => (
-              <section>
-                <div
-                  style={{ display: "flex", flexDirection: "column" }}
-                  {...getRootProps()}
-                >
-                  <input {...getInputProps()} />
-                  Drag 'n' drop some files here, or click to select files
-                  <BackupIcon style={iconStyle} />
-                </div>
-              </section>
+              <div
+                style={{ display: "flex", flexDirection: "column" }}
+                {...getRootProps()}
+              >
+                <input {...getInputProps()} />
+                Drag 'n' drop some files here, or click to select files
+                <BackupIcon style={iconStyle} />
+              </div>
             )}
           </Dropzone>
+          <div>
+            <FileList files={this.state.files} deleteFile={this.deleteFile} />
+          </div>
         </div>
-        <FileList files={this.state.files} deleteFile={this.deleteFile} />
-      </>
+      </div>
     );
   }
 }
