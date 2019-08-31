@@ -12,6 +12,7 @@ function App() {
     <>
       <NavBar />
       <Switch>
+        div
         <Route exact path="/" component={Landing} />
         <Route path="/login" component={Login} />
         <Route path="/store" component={DragDrop} />
