@@ -1,7 +1,20 @@
 import React, { Component } from "react";
+
 import Dropzone from "react-dropzone";
 import FileList from "./FileList";
 import BackupIcon from "@material-ui/icons/Backup";
+import Button from "@material-ui/core/Button";
+
+// const useStyles = makeStyles(theme => ({
+//   button: {
+//     margin: theme.spacing(1)
+//   },
+//   input: {
+//     display: "none"
+//   }
+// }));
+//
+// const classes = useStyles();
 
 class DragDrop extends Component {
   state = {
@@ -48,6 +61,10 @@ class DragDrop extends Component {
       // margin: "0 auto"
     };
 
+    const buttonStyle = {
+      border: "1px solid rgba(25, 118, 210, 0.5)"
+    };
+
     return (
       <div style={wrapper}>
         <div style={{ height: "200px" }}>
@@ -63,6 +80,17 @@ class DragDrop extends Component {
               </div>
             )}
           </Dropzone>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              margin: "1rem 0"
+            }}
+          >
+            <Button style={buttonStyle} variant="outlined">
+              Submit
+            </Button>
+          </div>
           <div>
             <FileList files={this.state.files} deleteFile={this.deleteFile} />
           </div>
