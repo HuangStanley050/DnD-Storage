@@ -1,20 +1,10 @@
 import React, { Component } from "react";
-
+import { connect } from "react-redux";
+import { upload_start } from "../store/actions/uploadActions";
 import Dropzone from "react-dropzone";
 import FileList from "./FileList";
 import BackupIcon from "@material-ui/icons/Backup";
 import Button from "@material-ui/core/Button";
-
-// const useStyles = makeStyles(theme => ({
-//   button: {
-//     margin: theme.spacing(1)
-//   },
-//   input: {
-//     display: "none"
-//   }
-// }));
-//
-// const classes = useStyles();
 
 class DragDrop extends Component {
   state = {
@@ -87,7 +77,11 @@ class DragDrop extends Component {
               margin: "1rem 0"
             }}
           >
-            <Button style={buttonStyle} variant="outlined">
+            <Button
+              onClick={() => this.props.uploadFiles(this.state.files)}
+              style={buttonStyle}
+              variant="outlined"
+            >
               Submit
             </Button>
           </div>
@@ -99,5 +93,11 @@ class DragDrop extends Component {
     );
   }
 }
+const mapDispatchToProps = dispatch => ({
+  uploadFiles: files => dispatch(upload_start(files))
+});
 
-export default DragDrop;
+export default connect(
+  null,
+  mapDispatchToProps
+)(DragDrop);
