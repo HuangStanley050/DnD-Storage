@@ -8,19 +8,25 @@ import Button from "@material-ui/core/Button";
 
 class DragDrop extends Component {
   state = {
-    files: []
+    files: [],
+    totalSize: 0
   };
   deleteFile = id => {
     const files = this.state.files;
+    let totalSize = 0;
     let newFiles = files.filter(file => file.path !== id);
-    this.setState({ files: newFiles });
+    newFiles.forEach(file => (totalSize += file.size));
+    this.setState({ files: newFiles, totalSize });
   };
   handleDrop = file => {
     const upLoadFile = file[0];
+
     this.setState(state => {
       const list = [...state.files, upLoadFile];
+      let totalSize = state.totalSize + upLoadFile.size / 1024 / 1024;
       return {
-        files: [...list]
+        files: [...list],
+        totalSize
       };
     });
   };
@@ -70,6 +76,16 @@ class DragDrop extends Component {
               </div>
             )}
           </Dropzone>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center"
+            }}
+          >
+            <h3>Files upload Limit: 5MB</h3>
+            <h4>Current: {this.state.totalSize}</h4>
+          </div>
           <div
             style={{
               display: "flex",
