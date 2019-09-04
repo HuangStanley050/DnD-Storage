@@ -36,7 +36,7 @@ const FileList = props => {
           <List dense={dense}>
             {props.files.map(file => {
               return (
-                <ListItem key={file.path}>
+                <ListItem key={file.id}>
                   <ListItemAvatar>
                     <Avatar>
                       <FolderIcon />
@@ -45,7 +45,7 @@ const FileList = props => {
                   <ListItemText primary={file.name} />
                   <ListItemSecondaryAction>
                     <IconButton
-                      onClick={() => props.deleteFile(file.path)}
+                      onClick={() => props.deleteFile(file.id)}
                       edge="end"
                       aria-label="delete"
                     >
