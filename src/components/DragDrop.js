@@ -8,10 +8,12 @@ import BackupIcon from "@material-ui/icons/Backup";
 import Button from "@material-ui/core/Button";
 
 class DragDrop extends Component {
+  maxSize = 5242880;
   state = {
     files: [],
     totalSize: 0,
-    error: false
+    currentSize: 0,
+    errorMsg: null
   };
   deleteFile = id => {
     const files = this.state.files;
@@ -22,17 +24,20 @@ class DragDrop extends Component {
     this.setState(state => {
       return {
         files: [...newFiles],
-        totalSize
+        totalSize,
+        currentSize: totalSize,
+        errorMsg: ""
       };
     });
   };
+
   handleDrop = (file, rejectedFile) => {
     if (rejectedFile.length !== 0) {
-      console.log("this has been rejected", rejectedFile);
+      //console.log("this has been rejected", rejectedFile);
       this.setState(state => {
         return {
           ...state,
-          error: true
+          errorMsg: "You are not allow to upload file larger than 5mb"
         };
       });
       return;
@@ -41,24 +46,30 @@ class DragDrop extends Component {
     const upLoadFile = file[0];
     let id = uuid();
     upLoadFile.id = id;
+    let totalSize = this.state.totalSize + upLoadFile.size / 1024 / 1024;
+
+    if (totalSize > 5.24288) {
+      //console.log("You have exceeded the total allowed upload size");
+      this.setState({
+        currentSize: totalSize,
+        errorMsg: "You have exceeded the total allowed upload size"
+      });
+      return;
+    }
+
     this.setState(state => {
       const list = [...state.files, upLoadFile];
-      let totalSize = state.totalSize + upLoadFile.size / 1024 / 1024;
       return {
         files: [...list],
         totalSize,
-        error: false
+        currentSize: totalSize,
+        errorMsg: null
       };
     });
   };
-  // onDropRejected = e => {
-  //   //return this.props.errorNotice('Maximum file upload size is 2MB');
-  //
-  //   alert("cant upload file larger than 5mb");
-  // };
+
   render() {
     const iconStyle = {
-      //position: "absolute",
       width: "100px",
       height: "100px",
       top: "0",
@@ -76,25 +87,20 @@ class DragDrop extends Component {
       justifyContent: "center",
       alignItems: "center",
       flexDirection: "column"
-      // top: "0",
-      // left: "0",
-      // bottom: "0",
-      // right: "0",
-      // margin: "0 auto"
     };
 
     const buttonStyle = {
       border: "1px solid rgba(25, 118, 210, 0.5)"
     };
-    const maxSize = 5242880;
+
     return (
       <div style={wrapper}>
-        <div style={{ height: "200px" }}>
+        <div style={{ height: "200px", width: "400px" }}>
           <Dropzone
+            //disabled={this.state.disabled}
             minSize={0}
-            maxSize={maxSize}
+            maxSize={this.maxSize}
             onDrop={this.handleDrop}
-            // onDropRejected={this.onDropRejected}
           >
             {({
               getRootProps,
@@ -105,7 +111,11 @@ class DragDrop extends Component {
             }) => {
               return (
                 <div
-                  style={{ display: "flex", flexDirection: "column" }}
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    textAlign: "center"
+                  }}
                   {...getRootProps()}
                 >
                   <input {...getInputProps()} />
@@ -123,12 +133,10 @@ class DragDrop extends Component {
             }}
           >
             <h3>Files upload Limit: 5MB</h3>
-            <h4>Current: {this.state.totalSize.toFixed(2)}MB</h4>
-            {this.state.error ? (
+            <h4>Current: {this.state.currentSize.toFixed(2)}MB</h4>
+            {this.state.errorMsg ? (
               <div>
-                <h3 style={{ color: "red" }}>
-                  can't upload file larger than 5MB
-                </h3>
+                <h3 style={{ color: "red" }}>{this.state.errorMsg}</h3>
               </div>
             ) : null}
           </div>
