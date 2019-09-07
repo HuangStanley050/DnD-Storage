@@ -42,7 +42,10 @@ const FileList = props => {
                       <FolderIcon />
                     </Avatar>
                   </ListItemAvatar>
-                  <ListItemText primary={file.name} />
+                  <ListItemText
+                    primary={file.name}
+                    secondary={(file.size / 1024 / 1024).toFixed(2) + "MB"}
+                  />
                   <ListItemSecondaryAction>
                     <IconButton
                       onClick={() => props.deleteFile(file.id)}

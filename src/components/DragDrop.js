@@ -77,7 +77,7 @@ class DragDrop extends Component {
       bottom: "0",
       right: "0",
       margin: "auto",
-      color: "blue"
+      color: this.state.errorMsg ? "#cf5148" : "blue"
     };
 
     const wrapper = {
@@ -148,6 +148,7 @@ class DragDrop extends Component {
             }}
           >
             <Button
+              disabled={this.state.errorMsg}
               onClick={() => this.props.uploadFiles(this.state.files)}
               style={buttonStyle}
               variant="outlined"
