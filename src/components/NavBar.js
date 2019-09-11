@@ -1,6 +1,7 @@
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
+import { connect } from "react-redux";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import PersonIcon from "@material-ui/icons/Person";
@@ -44,7 +45,8 @@ const AdapterLink = React.forwardRef((props, ref) => {
 });
 const Navbar = props => {
   const classes = useStyles();
-
+  const login_links = "";
+  const logout_links = "";
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -72,9 +74,6 @@ const Navbar = props => {
           </Typography>
 
           <Button
-            onClick={() => {
-              console.log("clicked");
-            }}
             component={AdapterLink}
             to="/store"
             variant="contained"
@@ -85,9 +84,6 @@ const Navbar = props => {
           </Button>
 
           <Button
-            onClick={() => {
-              console.log("clicked");
-            }}
             component={AdapterLink}
             to="/login"
             variant="contained"
@@ -97,9 +93,6 @@ const Navbar = props => {
             Login
           </Button>
           <Button
-            onClick={() => {
-              console.log("clicked");
-            }}
             variant="contained"
             component={AdapterLink}
             to="/dashboard"
@@ -117,5 +110,5 @@ const Navbar = props => {
     </div>
   );
 };
-
-export default Navbar;
+const mapStateToProps = state => ({ isAuth: state.auth.isAuth });
+export default connect(mapStateToProps)(Navbar);

@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
@@ -8,6 +10,7 @@ import FormControl from "@material-ui/core/FormControl";
 import TextField from "@material-ui/core/TextField";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import SecurityIcon from "@material-ui/icons/Security";
+import { login_start } from "../store/actions/authAction";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -50,50 +53,68 @@ const useForm = () => {
 const Login = props => {
   const classes = useStyles();
   const [form, handleChange, resetFields] = useForm();
-  console.log(form);
+  const submitHandler = e => {
+    e.preventDefault();
+    props.login(form);
+    resetFields();
+  };
+  if (props.isAuth) {
+    return <Redirect to="/dashboard" />;
+  }
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
         <Grid container wrap="nowrap" spacing={2}>
           <Grid item style={{ margin: "0 auto" }}>
-            <FormControl className={classes.margin}>
-              <TextField
-                onChange={handleChange}
-                className={classes.margin}
-                id="input-with-icon-textfield"
-                name="email"
-                label="Email"
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <AccountCircle />
-                    </InputAdornment>
-                  )
-                }}
-              />
-              <TextField
-                onChange={handleChange}
-                className={classes.margin}
-                id="input-with-icon-textfield"
-                label="Password"
-                name="password"
-                type="password"
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <SecurityIcon />
-                    </InputAdornment>
-                  )
-                }}
-              />
-              <Button variant="contained" color="primary">
-                Submit
-              </Button>
-            </FormControl>
+            <form onSubmit={submitHandler}>
+              <FormControl className={classes.margin}>
+                <TextField
+                  onChange={handleChange}
+                  className={classes.margin}
+                  id="input-with-icon-textfield"
+                  name="email"
+                  label="Email"
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <AccountCircle />
+                      </InputAdornment>
+                    )
+                  }}
+                />
+                <TextField
+                  onChange={handleChange}
+                  className={classes.margin}
+                  id="input-with-icon-textfield"
+                  label="Password"
+                  name="password"
+                  type="password"
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <SecurityIcon />
+                      </InputAdornment>
+                    )
+                  }}
+                />
+                <Button type="submit" variant="contained" color="primary">
+                  Submit
+                </Button>
+              </FormControl>
+            </form>
           </Grid>
         </Grid>
       </Paper>
     </div>
   );
 };
-export default Login;
+const mapStateToProps = state => ({ isAuth: state.auth.isAuth });
+const mapDispatchToProps = dispatch => {
+  return {
+    login: userInfo => dispatch(login_start(userInfo))
+  };
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Login);
