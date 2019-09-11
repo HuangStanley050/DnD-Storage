@@ -1,6 +1,7 @@
 import React from "react";
 
 import { Switch, Route } from "react-router-dom";
+import PrivateRoute from "./components/privateRoute";
 import NavBar from "./components/NavBar";
 import Login from "./components/Login";
 import Landing from "./components/Landing";
@@ -15,8 +16,8 @@ function App() {
         div
         <Route exact path="/" component={Landing} />
         <Route path="/login" component={Login} />
-        <Route path="/store" component={DragDrop} />
-        <Route path="/dashboard" component={DashBoard} />
+        <PrivateRoute path="/store" component={DragDrop} />
+        <PrivateRoute path="/dashboard" component={DashBoard} />
       </Switch>
     </>
   );

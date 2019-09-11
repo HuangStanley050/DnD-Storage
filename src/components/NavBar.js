@@ -45,8 +45,44 @@ const AdapterLink = React.forwardRef((props, ref) => {
 });
 const Navbar = props => {
   const classes = useStyles();
-  const login_links = "";
-  const logout_links = "";
+  const logout_links = (
+    <Button
+      component={AdapterLink}
+      to="/login"
+      variant="contained"
+      className={classes.button}
+    >
+      <PersonIcon />
+      Login
+    </Button>
+  );
+  const login_links = (
+    <>
+      <Button
+        component={AdapterLink}
+        to="/store"
+        variant="contained"
+        className={classes.button}
+      >
+        <CloudUploadIcon />
+        Upload
+      </Button>
+      <Button
+        variant="contained"
+        component={AdapterLink}
+        to="/dashboard"
+        className={classes.button}
+      >
+        <DescriptionIcon />
+        Dashboard
+      </Button>
+      <Button variant="contained" className={classes.button}>
+        <ExitIcon />
+        Log out
+      </Button>
+    </>
+  );
+
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -73,38 +109,7 @@ const Navbar = props => {
             File Uploader
           </Typography>
 
-          <Button
-            component={AdapterLink}
-            to="/store"
-            variant="contained"
-            className={classes.button}
-          >
-            <CloudUploadIcon />
-            Upload
-          </Button>
-
-          <Button
-            component={AdapterLink}
-            to="/login"
-            variant="contained"
-            className={classes.button}
-          >
-            <PersonIcon />
-            Login
-          </Button>
-          <Button
-            variant="contained"
-            component={AdapterLink}
-            to="/dashboard"
-            className={classes.button}
-          >
-            <DescriptionIcon />
-            Dashboard
-          </Button>
-          <Button variant="contained" className={classes.button}>
-            <ExitIcon />
-            Log out
-          </Button>
+          {props.isAuth ? login_links : logout_links}
         </Toolbar>
       </AppBar>
     </div>

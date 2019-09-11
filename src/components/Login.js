@@ -14,9 +14,13 @@ import { login_start } from "../store/actions/authAction";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1,
-    overflow: "hidden",
-    padding: theme.spacing(0, 3)
+    // flexGrow: 1,
+    // overflow: "hidden",
+    // padding: theme.spacing(0, 3)
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    minHeight: "60vh"
   },
   margin: {
     margin: theme.spacing(1)
@@ -67,12 +71,16 @@ const Login = props => {
         <Grid container wrap="nowrap" spacing={2}>
           <Grid item style={{ margin: "0 auto" }}>
             <form onSubmit={submitHandler}>
-              <FormControl className={classes.margin}>
+              <FormControl
+                style={{ width: "500px" }}
+                className={classes.margin}
+              >
                 <TextField
                   onChange={handleChange}
                   className={classes.margin}
                   id="input-with-icon-textfield"
                   name="email"
+                  value={form.email}
                   label="Email"
                   InputProps={{
                     startAdornment: (
@@ -88,6 +96,7 @@ const Login = props => {
                   id="input-with-icon-textfield"
                   label="Password"
                   name="password"
+                  value={form.password}
                   type="password"
                   InputProps={{
                     startAdornment: (
@@ -97,8 +106,20 @@ const Login = props => {
                     )
                   }}
                 />
-                <Button type="submit" variant="contained" color="primary">
+                <Button
+                  style={{ margin: "0.75rem 0" }}
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                >
                   Submit
+                </Button>
+                <Button
+                  onClick={resetFields}
+                  variant="contained"
+                  color="secondary"
+                >
+                  Reset
                 </Button>
               </FormControl>
             </form>
