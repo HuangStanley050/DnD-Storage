@@ -5,6 +5,7 @@ import { upload_start } from "../store/actions/uploadActions";
 import Dropzone from "react-dropzone";
 import FileList from "./FileList";
 import BackupIcon from "@material-ui/icons/Backup";
+import Snackbar from "@material-ui/core/Snackbar";
 import Button from "@material-ui/core/Button";
 
 class DragDrop extends Component {
@@ -13,7 +14,10 @@ class DragDrop extends Component {
     files: [],
     totalSize: 0,
     currentSize: 0,
-    errorMsg: null
+    errorMsg: null,
+    snackbarOpen: true,
+    vertical: "bottom",
+    horizontal: "right"
   };
   deleteFile = id => {
     const files = this.state.files;
@@ -29,6 +33,17 @@ class DragDrop extends Component {
         errorMsg: ""
       };
     });
+  };
+
+  handleClose = () => {
+    this.setState({ snackbarOpen: false });
+  };
+
+  handleSubmit = e => {
+    e.preventDefault();
+    const files = this.state.files;
+    this.props.uploadFiles(files);
+    this.setState({ files: [], currentSize: 0 });
   };
 
   handleDrop = (file, rejectedFile) => {
@@ -93,8 +108,24 @@ class DragDrop extends Component {
       border: "1px solid rgba(25, 118, 210, 0.5)"
     };
 
+    // if (this.props.uploadSuccess) {
+    //   snacksbarOpen = true;
+    // }
     return (
       <div style={wrapper}>
+        <Snackbar
+          anchorOrigin={{
+            vertical: this.state.vertical,
+            horizontal: this.state.horizontal
+          }}
+          key={`${this.state.vertical},${this.state.horizontal}`}
+          open={this.state.snackbarOpen}
+          onClose={this.handleClose}
+          ContentProps={{
+            "aria-describedby": "message-id"
+          }}
+          message={<span id="message-id">I love snacks</span>}
+        />
         <div style={{ height: "200px", width: "400px" }}>
           <Dropzone
             //disabled={this.state.disabled}
@@ -148,8 +179,8 @@ class DragDrop extends Component {
             }}
           >
             <Button
-              disabled={this.state.errorMsg}
-              onClick={() => this.props.uploadFiles(this.state.files)}
+              disabled={this.state.errorMsg ? true : false}
+              onClick={this.handleSubmit}
               style={buttonStyle}
               variant="outlined"
             >
@@ -168,7 +199,11 @@ const mapDispatchToProps = dispatch => ({
   uploadFiles: files => dispatch(upload_start(files))
 });
 
+const mapStateToProps = state => ({
+  uploadSuccess: state.data.uploadSuccess
+});
+
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(DragDrop);
