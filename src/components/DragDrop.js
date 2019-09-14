@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import uuid from "uuid/v4";
 import { connect } from "react-redux";
-import { upload_start } from "../store/actions/uploadActions";
+import {
+  upload_start,
+  resetUploadStatus
+} from "../store/actions/uploadActions";
 import Dropzone from "react-dropzone";
 import FileList from "./FileList";
 import BackupIcon from "@material-ui/icons/Backup";
@@ -9,16 +12,25 @@ import Snackbar from "@material-ui/core/Snackbar";
 import Button from "@material-ui/core/Button";
 
 class DragDrop extends Component {
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.uploadSuccess !== prevState.snackbarOpen) {
+      this.setState({ snackbarOpen: true });
+      console.log("updated");
+    }
+  }
+
   maxSize = 5242880;
+
   state = {
     files: [],
     totalSize: 0,
     currentSize: 0,
     errorMsg: null,
-    snackbarOpen: true,
+    snackbarOpen: false,
     vertical: "bottom",
     horizontal: "right"
   };
+
   deleteFile = id => {
     const files = this.state.files;
     let totalSize = 0;
@@ -37,13 +49,14 @@ class DragDrop extends Component {
 
   handleClose = () => {
     this.setState({ snackbarOpen: false });
+    this.props.reset();
   };
 
   handleSubmit = e => {
     e.preventDefault();
     const files = this.state.files;
     this.props.uploadFiles(files);
-    this.setState({ files: [], currentSize: 0 });
+    this.setState({ files: [], currentSize: 0, totalSize: 0 });
   };
 
   handleDrop = (file, rejectedFile) => {
@@ -196,7 +209,8 @@ class DragDrop extends Component {
   }
 }
 const mapDispatchToProps = dispatch => ({
-  uploadFiles: files => dispatch(upload_start(files))
+  uploadFiles: files => dispatch(upload_start(files)),
+  reset: () => dispatch(resetUploadStatus())
 });
 
 const mapStateToProps = state => ({

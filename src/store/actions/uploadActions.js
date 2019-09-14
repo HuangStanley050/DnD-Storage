@@ -9,3 +9,4 @@ export const upload_okay = response => ({
   type: actionType.UPLOAD_OKAY,
   response
 });
+export const resetUploadStatus = () => ({ type: actionType.UPLOAD_RESET });

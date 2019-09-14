@@ -7,6 +7,12 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case actionType.UPLOAD_RESET:
+      //console.log("reset uploadSuccess");
+      return {
+        ...state,
+        uploadSuccess: false
+      };
     case actionType.UPLOAD_START:
       return {
         ...state,
