@@ -7,15 +7,13 @@ import {
   resetUploadStatus
 } from "../store/actions/uploadActions";
 import Dropzone from "react-dropzone";
-import { withStyles } from "@material-ui/core/styles";
+
 import FileList from "./FileList";
 import BackupIcon from "@material-ui/icons/Backup";
 import Snackbar from "@material-ui/core/Snackbar";
+import SnackbarContent from "@material-ui/core/SnackbarContent";
 import Button from "@material-ui/core/Button";
 
-const style = {
-  backgroundColor: "green"
-};
 class DragDrop extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (this.props.uploadSuccess !== prevState.snackbarOpen) {
@@ -30,7 +28,7 @@ class DragDrop extends Component {
     totalSize: 0,
     currentSize: 0,
     errorMsg: null,
-    snackbarOpen: true,
+    snackbarOpen: false,
     vertical: "bottom",
     horizontal: "right"
   };
@@ -125,9 +123,6 @@ class DragDrop extends Component {
       border: "1px solid rgba(25, 118, 210, 0.5)"
     };
 
-    const success = { backgroundColor: "green" };
-    const fail = { backgroundColor: "red" };
-
     // if (this.props.uploadSuccess) {
     //   snacksbarOpen = true;
     // }
@@ -145,14 +140,26 @@ class DragDrop extends Component {
           ContentProps={{
             "aria-describedby": "message-id"
           }}
-          message={
-            this.props.uploadSuccess ? (
-              <span id="message-id">Upload Success</span>
-            ) : (
-              <span id="message-id">Upload Failed</span>
-            )
-          }
-        />
+          // message={
+          //   this.props.uploadSuccess ? (
+          //     <span id="message-id">Upload Success</span>
+          //   ) : (
+          //     <span id="message-id">Upload Failed</span>
+          //   )
+          // }
+        >
+          <SnackbarContent
+            style={
+              this.props.uploadSuccess
+                ? { backgroundColor: "green" }
+                : { backgroundColor: "red" }
+            }
+            message={
+              this.props.uploadSuccess ? "Upload Successful" : "Upload failed"
+            }
+          />
+        </Snackbar>
+
         <div style={{ height: "200px", width: "400px" }}>
           <Dropzone
             //disabled={this.state.disabled}
