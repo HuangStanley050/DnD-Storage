@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Loader from "./Loader";
 import uuid from "uuid/v4";
 import { connect } from "react-redux";
 import {
@@ -6,16 +7,19 @@ import {
   resetUploadStatus
 } from "../store/actions/uploadActions";
 import Dropzone from "react-dropzone";
+import { withStyles } from "@material-ui/core/styles";
 import FileList from "./FileList";
 import BackupIcon from "@material-ui/icons/Backup";
 import Snackbar from "@material-ui/core/Snackbar";
 import Button from "@material-ui/core/Button";
 
+const style = {
+  backgroundColor: "green"
+};
 class DragDrop extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (this.props.uploadSuccess !== prevState.snackbarOpen) {
       this.setState({ snackbarOpen: true });
-      console.log("updated");
     }
   }
 
@@ -26,7 +30,7 @@ class DragDrop extends Component {
     totalSize: 0,
     currentSize: 0,
     errorMsg: null,
-    snackbarOpen: false,
+    snackbarOpen: true,
     vertical: "bottom",
     horizontal: "right"
   };
@@ -121,9 +125,13 @@ class DragDrop extends Component {
       border: "1px solid rgba(25, 118, 210, 0.5)"
     };
 
+    const success = { backgroundColor: "green" };
+    const fail = { backgroundColor: "red" };
+
     // if (this.props.uploadSuccess) {
     //   snacksbarOpen = true;
     // }
+
     return (
       <div style={wrapper}>
         <Snackbar
@@ -137,7 +145,13 @@ class DragDrop extends Component {
           ContentProps={{
             "aria-describedby": "message-id"
           }}
-          message={<span id="message-id">I love snacks</span>}
+          message={
+            this.props.uploadSuccess ? (
+              <span id="message-id">Upload Success</span>
+            ) : (
+              <span id="message-id">Upload Failed</span>
+            )
+          }
         />
         <div style={{ height: "200px", width: "400px" }}>
           <Dropzone
@@ -200,6 +214,9 @@ class DragDrop extends Component {
               Submit
             </Button>
           </div>
+          <div style={{ textAlign: "center" }}>
+            {this.props.loading ? <Loader /> : null}
+          </div>
           <div>
             <FileList files={this.state.files} deleteFile={this.deleteFile} />
           </div>
@@ -214,7 +231,8 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => ({
-  uploadSuccess: state.data.uploadSuccess
+  uploadSuccess: state.data.uploadSuccess,
+  loading: state.data.loading
 });
 
 export default connect(
