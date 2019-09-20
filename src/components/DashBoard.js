@@ -1,6 +1,11 @@
 import React, { Component } from "react";
+import { get_data_start } from "../store/actions/getDataAction";
+import { connect } from "react-redux";
 
 class DashBoard extends Component {
+  componentDidMount() {
+    this.props.loadData();
+  }
   render() {
     // const background = {
     //   position: "fixed",
@@ -22,5 +27,10 @@ class DashBoard extends Component {
     );
   }
 }
-
-export default DashBoard;
+const mapDispatchToProps = dispatch => ({
+  loadData: () => dispatch(get_data_start())
+});
+export default connect(
+  null,
+  mapDispatchToProps
+)(DashBoard);

@@ -2,10 +2,30 @@ import * as actionType from "../actions/actionTypes";
 import API from "../../config/api";
 import axios from "axios";
 import { upload_fail, upload_okay } from "../actions/uploadActions";
+import { get_data_okay } from "../actions/getDataAction";
 import { takeEvery, put, select } from "redux-saga/effects";
 
 export default function* dataSagaWatcher() {
   yield takeEvery(actionType.UPLOAD_START, dataUploadWorker);
+  yield takeEvery(actionType.GET_DATA_START, dataFetchWorker);
+}
+
+function* dataFetchWorker(action) {
+  // yield console.log("fetching data");
+  // yield console.log(action);
+  let fetchResult;
+  const token = localStorage.getItem("File-Uploader");
+  try {
+    fetchResult = yield axios({
+      headers: { Authorization: "bearer " + token },
+      method: "get",
+      url: API.upload
+    });
+    //console.log(fetchResult.data);
+    yield put(get_data_okay(fetchResult.data.files));
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 function* dataUploadWorker(action) {

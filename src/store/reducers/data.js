@@ -13,10 +13,17 @@ const reducer = (state = initialState, action) => {
         ...state,
         uploadSuccess: false
       };
+    case actionType.GET_DATA_START:
     case actionType.UPLOAD_START:
       return {
         ...state,
         loading: true
+      };
+    case actionType.GET_DATA_OKAY:
+      return {
+        ...state,
+        loading: false,
+        data: [...action.data]
       };
     case actionType.UPLOAD_OKAY:
       return {
