@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { get_data_start } from "../store/actions/getDataAction";
 import { connect } from "react-redux";
 import PieChartComponent from "./chart/pieChart";
+import FileList from "./chart/FileList";
 
 class DashBoard extends Component {
   componentDidMount() {
@@ -28,6 +29,7 @@ class DashBoard extends Component {
       <div>
         <h1>This is Dash board</h1>
         <PieChartComponent pieData={pieData} />
+        <FileList />
       </div>
     );
   }
