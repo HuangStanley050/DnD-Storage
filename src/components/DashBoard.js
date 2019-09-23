@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { get_data_start } from "../store/actions/getDataAction";
 import { connect } from "react-redux";
+import PieChartComponent from "./chart/pieChart";
 
 class DashBoard extends Component {
   componentDidMount() {
@@ -19,18 +20,25 @@ class DashBoard extends Component {
     //   alignItems: "center",
     //   backgroundColor: "rgba(0,0,0,0.5)"
     // };
-
+    let pieData = this.props.data.map(pie => ({
+      name: pie.type,
+      value: pie.files.length
+    }));
     return (
       <div>
         <h1>This is Dash board</h1>
+        <PieChartComponent pieData={pieData} />
       </div>
     );
   }
 }
+const mapStateToProps = state => ({
+  data: state.data.data
+});
 const mapDispatchToProps = dispatch => ({
   loadData: () => dispatch(get_data_start())
 });
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(DashBoard);
