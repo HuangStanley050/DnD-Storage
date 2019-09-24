@@ -7,14 +7,15 @@ import File from "./File";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
+    marginTop: "0.1rem"
   },
   control: {
     padding: theme.spacing(2)
   }
 }));
 
-export default function FileList() {
+const FileList = props => {
   const [spacing, setSpacing] = React.useState(2);
   const classes = useStyles();
 
@@ -26,8 +27,8 @@ export default function FileList() {
     <Grid container className={classes.root} spacing={2}>
       <Grid item xs={12}>
         <Grid container justify="center" spacing={spacing}>
-          {[0, 1, 2].map(value => (
-            <Grid key={value} item>
+          {props.pieData.map(data => (
+            <Grid key={data.name} item>
               <File className={classes.paper} />
             </Grid>
           ))}
@@ -35,4 +36,6 @@ export default function FileList() {
       </Grid>
     </Grid>
   );
-}
+};
+
+export default FileList;

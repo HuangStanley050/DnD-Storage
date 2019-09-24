@@ -29,7 +29,7 @@ class DashBoard extends Component {
       <div>
         <h1>This is Dash board</h1>
         <PieChartComponent pieData={pieData} />
-        <FileList />
+        <FileList pieData={pieData} />
       </div>
     );
   }

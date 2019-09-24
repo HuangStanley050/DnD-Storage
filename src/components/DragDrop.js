@@ -213,7 +213,9 @@ class DragDrop extends Component {
             }}
           >
             <Button
-              disabled={this.state.errorMsg ? true : false}
+              disabled={
+                this.state.errorMsg || this.props.loading ? true : false
+              }
               onClick={this.handleSubmit}
               style={buttonStyle}
               variant="outlined"

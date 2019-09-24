@@ -39,24 +39,22 @@ class PieChartComponent extends PureComponent {
     };
     return (
       <div style={pieChartStyle}>
-        <ResponsiveContainer width={800} height={600}>
-          <PieChart onMouseEnter={this.onPieEnter}>
-            <Pie
-              dataKey="value"
-              data={this.props.pieData}
-              cx={400}
-              cy={200}
-              labelLine={false}
-              label={renderCustomizedLabel}
-              outerRadius={200}
-              fill="#8884d8"
-            >
-              {this.props.pieData.map((entry, index) => (
-                <Cell key={index} fill={COLORS[index % COLORS.length]} />
-              ))}
-            </Pie>
-          </PieChart>
-        </ResponsiveContainer>
+        <PieChart width={800} height={450} onMouseEnter={this.onPieEnter}>
+          <Pie
+            dataKey="value"
+            data={this.props.pieData}
+            cx={400}
+            cy={200}
+            labelLine={false}
+            label={renderCustomizedLabel}
+            outerRadius={200}
+            fill="#8884d8"
+          >
+            {this.props.pieData.map((entry, index) => (
+              <Cell key={index} fill={COLORS[index % COLORS.length]} />
+            ))}
+          </Pie>
+        </PieChart>
       </div>
     );
   }
