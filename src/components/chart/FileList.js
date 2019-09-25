@@ -29,7 +29,11 @@ const FileList = props => {
         <Grid container justify="center" spacing={spacing}>
           {props.pieData.map(data => (
             <Grid key={data.name} item>
-              <File className={classes.paper} />
+              <File
+                type={data.name}
+                number={data.value}
+                className={classes.paper}
+              />
             </Grid>
           ))}
         </Grid>

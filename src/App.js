@@ -7,19 +7,24 @@ import Login from "./components/Login";
 import Landing from "./components/Landing";
 import DashBoard from "./components/DashBoard";
 import DragDrop from "./components/DragDrop";
+import Data from "./components/Data";
 
 function App() {
   return (
-    <>
+    <main>
       <NavBar />
       <Switch>
         div
         <Route exact path="/" component={Landing} />
         <Route path="/login" component={Login} />
         <PrivateRoute path="/store" component={DragDrop} />
-        <PrivateRoute path="/dashboard" component={DashBoard} />
+        <PrivateRoute exact path="/dashboard" component={DashBoard} />
+        <PrivateRoute
+          path="/dashboard/data/:type"
+          render={props => <Data {...props} />}
+        />
       </Switch>
-    </>
+    </main>
   );
 }
 

@@ -9,18 +9,6 @@ class DashBoard extends Component {
     this.props.loadData();
   }
   render() {
-    // const background = {
-    //   position: "fixed",
-    //   width: "100%",
-    //   height: "100%",
-    //   left: "0",
-    //   zIndex: "100",
-    //   top: "0",
-    //   display: "flex",
-    //   justifyContent: "center",
-    //   alignItems: "center",
-    //   backgroundColor: "rgba(0,0,0,0.5)"
-    // };
     let pieData = this.props.data.map(pie => ({
       name: pie.type,
       value: pie.files.length

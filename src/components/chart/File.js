@@ -5,10 +5,18 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import { Link as RouterLink } from "react-router-dom";
+
+const AdapterLink = React.forwardRef((props, ref) => {
+  //console.log("props====>", props);
+  //console.log("ref====>", ref);
+  return <RouterLink innerRef={ref} {...props} />;
+});
 
 const useStyles = makeStyles({
   card: {
-    minWidth: 275
+    minWidth: 275,
+    backgroundColor: "dodgerblue"
   },
   bullet: {
     display: "inline-block",
@@ -23,39 +31,44 @@ const useStyles = makeStyles({
   }
 });
 
-export default function File() {
+const File = props => {
   const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
-
+  const trim_data = str => {
+    let index = str.indexOf("/");
+    let new_str = str.slice(index + 1, str.length);
+    return new_str;
+  };
+  //trim_data(props.type);
   return (
     <Card className={classes.card}>
       <CardContent>
         <Typography
-          className={classes.title}
-          color="textSecondary"
-          gutterBottom
+          style={{ textAlign: "center", color: "white" }}
+          variant="h5"
+          component="h2"
         >
-          Word of the Day
+          {props.type}
         </Typography>
-        <Typography variant="h5" component="h2">
-          be
-          {bull}
-          nev
-          {bull}o{bull}
-          lent
-        </Typography>
-        <Typography className={classes.pos} color="textSecondary">
-          adjective
-        </Typography>
-        <Typography variant="body2" component="p">
-          well meaning and kindly.
-          <br />
-          {'"a benevolent smile"'}
+        <Typography
+          style={{ marginTop: "1rem", textAlign: "center", color: "white" }}
+          variant="h6"
+          component="h4"
+        >
+          Number of Files: {props.number}
         </Typography>
       </CardContent>
-      <CardActions>
-        <Button size="small">Learn More</Button>
+      <CardActions style={{ justifyContent: "center" }}>
+        <Button
+          to={`/dashboard/data/${trim_data(props.type)}`}
+          component={AdapterLink}
+          style={{ color: "darkblue" }}
+          size="small"
+        >
+          Learn More
+        </Button>
       </CardActions>
     </Card>
   );
-}
+};
+
+export default File;
