@@ -14,15 +14,11 @@ function App() {
     <main>
       <NavBar />
       <Switch>
-        div
         <Route exact path="/" component={Landing} />
         <Route path="/login" component={Login} />
         <PrivateRoute path="/store" component={DragDrop} />
         <PrivateRoute exact path="/dashboard" component={DashBoard} />
-        <PrivateRoute
-          path="/dashboard/data/:type"
-          render={props => <Data {...props} />}
-        />
+        <PrivateRoute path="/dashboard/data/:type" component={Data} />
       </Switch>
     </main>
   );

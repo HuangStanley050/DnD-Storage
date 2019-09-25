@@ -11,6 +11,7 @@ import TextField from "@material-ui/core/TextField";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import SecurityIcon from "@material-ui/icons/Security";
 import { login_start } from "../store/actions/authAction";
+import Loader from "./Loader";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -72,7 +73,7 @@ const Login = props => {
           <Grid item style={{ margin: "0 auto" }}>
             <form onSubmit={submitHandler}>
               <FormControl
-                style={{ width: "500px" }}
+                style={{ width: "500px", justifyContent: "center" }}
                 className={classes.margin}
               >
                 <TextField
@@ -107,7 +108,7 @@ const Login = props => {
                   }}
                 />
                 <Button
-                  style={{ margin: "0.75rem 0" }}
+                  style={{ margin: "0.75rem auto", width: "60%" }}
                   type="submit"
                   variant="contained"
                   color="primary"
@@ -118,6 +119,7 @@ const Login = props => {
                   onClick={resetFields}
                   variant="contained"
                   color="secondary"
+                  style={{ width: "60%", margin: "0.75rem auto" }}
                 >
                   Reset
                 </Button>
@@ -125,11 +127,25 @@ const Login = props => {
             </form>
           </Grid>
         </Grid>
+        {props.loading ? (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center"
+            }}
+          >
+            <Loader style={{ margin: "0 auto" }} />
+          </div>
+        ) : null}
       </Paper>
     </div>
   );
 };
-const mapStateToProps = state => ({ isAuth: state.auth.isAuth });
+const mapStateToProps = state => ({
+  isAuth: state.auth.isAuth,
+  loading: state.auth.loading
+});
 const mapDispatchToProps = dispatch => {
   return {
     login: userInfo => dispatch(login_start(userInfo))

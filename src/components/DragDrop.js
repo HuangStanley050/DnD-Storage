@@ -56,7 +56,12 @@ class DragDrop extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
+
     const files = this.state.files;
+    if (files.length === 0) {
+      alert("You can't submit, you have no files uploaded");
+      return;
+    }
     this.props.uploadFiles(files);
     this.setState({ files: [], currentSize: 0, totalSize: 0 });
   };
