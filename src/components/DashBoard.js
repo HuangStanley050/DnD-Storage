@@ -6,12 +6,15 @@ import FileList from "./chart/FileList";
 
 class DashBoard extends Component {
   componentDidMount() {
-    this.props.loadData();
+    if (this.props.data.length === 0) {
+      this.props.loadData();
+    }
   }
   render() {
     let pieData = this.props.data.map(pie => ({
       name: pie.type,
-      value: pie.files.length
+      value: pie.files.length,
+      files: pie.files
     }));
     return (
       <div>

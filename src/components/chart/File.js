@@ -6,6 +6,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { Link as RouterLink } from "react-router-dom";
+import { define_color } from "./colorHelper";
 
 const AdapterLink = React.forwardRef((props, ref) => {
   //console.log("props====>", props);
@@ -43,7 +44,11 @@ const File = props => {
     <Card className={classes.card}>
       <CardContent>
         <Typography
-          style={{ textAlign: "center", color: "white" }}
+          style={{
+            textAlign: "center",
+            color: "white",
+            backgroundColor: define_color(props.type)
+          }}
           variant="h5"
           component="h2"
         >

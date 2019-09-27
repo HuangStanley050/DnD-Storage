@@ -33,6 +33,7 @@ const FileList = props => {
                 type={data.name}
                 number={data.value}
                 className={classes.paper}
+                files={data.files}
               />
             </Grid>
           ))}

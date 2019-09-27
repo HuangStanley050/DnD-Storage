@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
-import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from "recharts";
+import { PieChart, Pie, Sector, Cell } from "recharts";
+import { define_color } from "./colorHelper";
 
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 const RADIAN = Math.PI / 180;
 
 const renderCustomizedLabel = ({
@@ -50,9 +50,12 @@ class PieChartComponent extends PureComponent {
             outerRadius={200}
             fill="#8884d8"
           >
-            {this.props.pieData.map((entry, index) => (
-              <Cell key={index} fill={COLORS[index % COLORS.length]} />
-            ))}
+            {this.props.pieData.map((entry, index) => {
+              //console.log(entry);
+              //console.log(define_color(entry.name));
+              //COLORS[index % COLORS.length]
+              return <Cell key={index} fill={define_color(entry.name)} />;
+            })}
           </Pie>
         </PieChart>
       </div>
