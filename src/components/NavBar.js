@@ -1,6 +1,7 @@
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
+import { logout } from "../store/actions/authAction";
 import { connect } from "react-redux";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -76,7 +77,11 @@ const Navbar = props => {
         <DescriptionIcon />
         Dashboard
       </Button>
-      <Button variant="contained" className={classes.button}>
+      <Button
+        onClick={() => props.logout()}
+        variant="contained"
+        className={classes.button}
+      >
         <ExitIcon />
         Log out
       </Button>
@@ -116,4 +121,8 @@ const Navbar = props => {
   );
 };
 const mapStateToProps = state => ({ isAuth: state.auth.isAuth });
-export default connect(mapStateToProps)(Navbar);
+const mapDispatchToProps = dispatch => ({ logout: () => dispatch(logout()) });
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Navbar);

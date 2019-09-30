@@ -1,11 +1,17 @@
 import * as actionType from "../actions/actionTypes";
 const initialState = {
-  isAuth: true,
+  isAuth: false,
   loading: false
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case actionType.LOGOUT:
+      localStorage.removeItem("File-Uploader");
+      return {
+        ...state,
+        isAuth: false
+      };
     case actionType.LOGIN_START:
       return {
         ...state,

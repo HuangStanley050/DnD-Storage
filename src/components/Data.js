@@ -4,7 +4,10 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
+import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import FolderIcon from "@material-ui/icons/Folder";
+import DeleteIcon from "@material-ui/icons/Delete";
+import IconButton from "@material-ui/core/IconButton";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -23,11 +26,16 @@ const Data = props => {
       <List aria-label="main mailbox folders">
         {props.location.state.data.map(file => {
           return (
-            <ListItem button>
-              <ListItemIcon s>
-                <FolderIcon />
+            <ListItem button key={file}>
+              <ListItemIcon>
+                <FolderIcon style={{ color: "pink" }} />
               </ListItemIcon>
               <ListItemText primary={file} />
+              <ListItemSecondaryAction>
+                <IconButton edge="end" aria-label="delete">
+                  <DeleteIcon style={{ color: "red" }} />
+                </IconButton>
+              </ListItemSecondaryAction>
             </ListItem>
           );
         })}

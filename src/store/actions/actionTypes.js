@@ -7,6 +7,8 @@ export const LOGIN_START = "LOGIN_START";
 export const LOGIN_OKAY = "LOGIN_OKAY";
 export const LOGIN_FAIL = "LOGIN_FAIL";
 
+export const LOGOUT = "LOGOUT";
+
 export const GET_DATA_START = "GET_DATA_START";
 export const GET_DATA_OKAY = "GET_DATA_OKAY";
 export const GET_DATA_FAIL = "GET_DATA_FAIL";
