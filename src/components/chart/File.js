@@ -9,8 +9,6 @@ import { Link as RouterLink } from "react-router-dom";
 import { define_color } from "./colorHelper";
 
 const AdapterLink = React.forwardRef((props, ref) => {
-  //console.log("props====>", props);
-  //console.log("ref====>", ref);
   return <RouterLink innerRef={ref} {...props} />;
 });
 
@@ -64,12 +62,15 @@ const File = props => {
       </CardContent>
       <CardActions style={{ justifyContent: "center" }}>
         <Button
-          to={`/dashboard/data/${trim_data(props.type)}`}
+          to={{
+            pathname: `/dashboard/data/${trim_data(props.type)}`,
+            state: { data: props.files, type: props.type }
+          }}
           component={AdapterLink}
           style={{ color: "darkblue" }}
           size="small"
         >
-          Learn More
+          Download Data
         </Button>
       </CardActions>
     </Card>
