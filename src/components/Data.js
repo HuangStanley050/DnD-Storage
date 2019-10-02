@@ -25,12 +25,13 @@ const Data = props => {
       <h1 style={{ textAlign: "center" }}>{props.location.state.type}</h1>
       <List aria-label="main mailbox folders">
         {props.location.state.data.map(file => {
+          console.log(file);
           return (
-            <ListItem button key={file}>
+            <ListItem button key={file.id}>
               <ListItemIcon>
                 <FolderIcon style={{ color: "pink" }} />
               </ListItemIcon>
-              <ListItemText primary={file} />
+              <ListItemText primary={file.name} />
               <ListItemSecondaryAction>
                 <IconButton edge="end" aria-label="delete">
                   <DeleteIcon style={{ color: "red" }} />

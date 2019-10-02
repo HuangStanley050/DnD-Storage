@@ -21,7 +21,7 @@ function* dataFetchWorker(action) {
       method: "get",
       url: API.upload
     });
-    //console.log(fetchResult.data);
+
     yield put(get_data_okay(fetchResult.data.files));
   } catch (err) {
     console.log(err);

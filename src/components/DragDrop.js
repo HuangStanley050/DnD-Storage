@@ -8,7 +8,7 @@ import {
 } from "../store/actions/uploadActions";
 import Dropzone from "react-dropzone";
 
-import FileList from "./FileList";
+import FileListUpload from "./FileListUpload";
 import BackupIcon from "@material-ui/icons/Backup";
 import Snackbar from "@material-ui/core/Snackbar";
 import SnackbarContent from "@material-ui/core/SnackbarContent";
@@ -232,7 +232,10 @@ class DragDrop extends Component {
             {this.props.loading ? <Loader /> : null}
           </div>
           <div>
-            <FileList files={this.state.files} deleteFile={this.deleteFile} />
+            <FileListUpload
+              files={this.state.files}
+              deleteFile={this.deleteFile}
+            />
           </div>
         </div>
       </div>

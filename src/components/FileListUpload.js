@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const FileList = props => {
+const FileListUpload = props => {
   const classes = useStyles();
   const [dense, setDense] = React.useState(false);
   const [secondary, setSecondary] = React.useState(false);
@@ -65,4 +65,4 @@ const FileList = props => {
   );
 };
 
-export default FileList;
+export default FileListUpload;

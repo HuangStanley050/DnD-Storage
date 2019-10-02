@@ -78,7 +78,11 @@ const Navbar = props => {
         Dashboard
       </Button>
       <Button
-        onClick={() => props.logout()}
+        onClick={() => {
+          if (window.confirm("Are you logging out?")) {
+            props.logout();
+          }
+        }}
         variant="contained"
         className={classes.button}
       >
