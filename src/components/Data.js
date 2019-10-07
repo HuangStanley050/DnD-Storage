@@ -8,6 +8,8 @@ import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import FolderIcon from "@material-ui/icons/Folder";
 import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from "@material-ui/core/IconButton";
+import { get_download_data } from "../store/actions/getDataAction";
+import { connect } from "react-redux";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -19,15 +21,18 @@ const useStyles = makeStyles(theme => ({
 
 const Data = props => {
   const classes = useStyles();
-  //console.log(props.location.state);
+  console.log(props.location.state.data[0].name);
   return (
     <div className={classes.root}>
       <h1 style={{ textAlign: "center" }}>{props.location.state.type}</h1>
       <List aria-label="main mailbox folders">
         {props.location.state.data.map(file => {
-          console.log(file);
           return (
-            <ListItem button key={file.id}>
+            <ListItem
+              onClick={() => props.download(file.id)}
+              button
+              key={file.id}
+            >
               <ListItemIcon>
                 <FolderIcon style={{ color: "pink" }} />
               </ListItemIcon>
@@ -44,5 +49,10 @@ const Data = props => {
     </div>
   );
 };
-
-export default Data;
+const mapDispatchToProps = dispatch => ({
+  download: fileID => dispatch(get_download_data(fileID))
+});
+export default connect(
+  null,
+  mapDispatchToProps
+)(Data);
