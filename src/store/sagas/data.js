@@ -14,12 +14,14 @@ export default function* dataSagaWatcher() {
 function* dataDownloadWorker(action) {
   const token = localStorage.getItem("File-Uploader");
   try {
-    yield axios({
+    let result = yield axios({
       headers: { Authorization: "bearer " + token },
       method: "get",
       url: `${API.download}${action.fileID}`
     });
+    window.location.assign(result.data.link);
   } catch (err) {
+    console.log("error");
     console.log(err);
   }
 }
