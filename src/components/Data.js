@@ -8,7 +8,9 @@ import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import FolderIcon from "@material-ui/icons/Folder";
 import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from "@material-ui/core/IconButton";
-import { get_download_data } from "../store/actions/getDataAction";
+import Loader from "./Loader";
+import { get_download_data, delete_file } from "../store/actions/getDataAction";
+
 import { connect } from "react-redux";
 
 const useStyles = makeStyles(theme => ({
@@ -21,7 +23,7 @@ const useStyles = makeStyles(theme => ({
 
 const Data = props => {
   const classes = useStyles();
-  console.log(props.location.state.data[0].name);
+
   return (
     <div className={classes.root}>
       <h1 style={{ textAlign: "center" }}>{props.location.state.type}</h1>
@@ -38,7 +40,11 @@ const Data = props => {
               </ListItemIcon>
               <ListItemText primary={file.name} />
               <ListItemSecondaryAction>
-                <IconButton edge="end" aria-label="delete">
+                <IconButton
+                  onClick={() => props.deleteFile(file.id)}
+                  edge="end"
+                  aria-label="delete"
+                >
                   <DeleteIcon style={{ color: "red" }} />
                 </IconButton>
               </ListItemSecondaryAction>
@@ -46,13 +52,22 @@ const Data = props => {
           );
         })}
       </List>
+      {props.loading ? (
+        <div style={{ textAlign: "center" }}>
+          <Loader />
+        </div>
+      ) : null}
     </div>
   );
 };
 const mapDispatchToProps = dispatch => ({
-  download: fileID => dispatch(get_download_data(fileID))
+  download: fileID => dispatch(get_download_data(fileID)),
+  deleteFile: fileID => dispatch(delete_file(fileID))
+});
+const mapStateToProps = state => ({
+  loading: state.data.loading
 });
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Data);

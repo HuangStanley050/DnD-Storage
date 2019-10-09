@@ -8,3 +8,11 @@ export const get_download_data = fileID => ({
   type: actionType.REQUEST_DOWNLOAD,
   fileID
 });
+
+export const delete_file = fileID => ({
+  type: actionType.DELETE_START,
+  fileID
+});
+
+export const delete_file_okay = () => ({ type: actionType.DELETE_OKAY });
+export const deleteF_file_fail = () => ({ type: actionType.DELETE_FAIL });

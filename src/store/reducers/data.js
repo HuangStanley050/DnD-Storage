@@ -7,18 +7,23 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case actionType.DELETE_OKAY:
+      return {
+        ...state,
+        loading: false
+      };
     case actionType.LOGOUT:
       return {
         ...state,
         data: []
       };
     case actionType.UPLOAD_RESET:
-      //console.log("reset uploadSuccess");
       return {
         ...state,
         uploadSuccess: false
       };
     case actionType.GET_DATA_START:
+    case actionType.DELETE_START:
     case actionType.UPLOAD_START:
       return {
         ...state,

@@ -14,3 +14,7 @@ export const GET_DATA_OKAY = "GET_DATA_OKAY";
 export const GET_DATA_FAIL = "GET_DATA_FAIL";
 
 export const REQUEST_DOWNLOAD = "REQUEST_DOWNLOAD";
+
+export const DELETE_START = "DELETE_START";
+export const DELETE_OKAY = "DELETE_OKAY";
+export const DELETE_FAIL = "DELETE_FAIL";
