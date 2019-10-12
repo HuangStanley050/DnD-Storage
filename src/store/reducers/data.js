@@ -9,10 +9,17 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionType.DELETE_OKAY:
       let newData = [];
-      newData = state.data.map(fileType => {
-        return fileType.files.filter(file => file.id !== action.fileID);
+
+      state.data.forEach(fileType => {
+        let tempFileArray = fileType.files.filter(
+          file => file.id !== action.fileID
+        );
+        if (tempFileArray.length !== 0) {
+          newData.push({ ...fileType, files: tempFileArray });
+        }
       });
-      console.log("new data is: ", newData);
+      // console.log("old data is ", state.data);
+      // console.log("new data is: ", newData);
       return {
         ...state,
         data: [...newData],

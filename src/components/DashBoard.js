@@ -8,7 +8,6 @@ class DashBoard extends Component {
   componentDidMount() {
     if (this.props.data.length === 0) {
       this.props.loadData();
-      //console.log("data array is empty");
     }
   }
   render() {
