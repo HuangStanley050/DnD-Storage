@@ -14,5 +14,8 @@ export const delete_file = fileID => ({
   fileID
 });
 
-export const delete_file_okay = () => ({ type: actionType.DELETE_OKAY });
+export const delete_file_okay = fileID => ({
+  type: actionType.DELETE_OKAY,
+  fileID
+});
 export const deleteF_file_fail = () => ({ type: actionType.DELETE_FAIL });

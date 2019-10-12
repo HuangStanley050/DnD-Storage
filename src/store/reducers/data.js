@@ -8,8 +8,14 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionType.DELETE_OKAY:
+      let newData = [];
+      newData = state.data.map(fileType => {
+        return fileType.files.filter(file => file.id !== action.fileID);
+      });
+      console.log("new data is: ", newData);
       return {
         ...state,
+        data: [...newData],
         loading: false
       };
     case actionType.LOGOUT:

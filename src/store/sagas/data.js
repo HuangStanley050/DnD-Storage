@@ -14,9 +14,9 @@ export default function* dataSagaWatcher() {
 function* dataDeleteWorker(action) {
   const token = localStorage.getItem("File-Uploader");
   const fileID = action.fileID;
-  let result;
+
   try {
-    result = yield axios({
+    yield axios({
       headers: { Authorization: "bearer " + token },
       method: "delete",
       url: API.delete,
@@ -24,7 +24,7 @@ function* dataDeleteWorker(action) {
         fileID
       }
     });
-    yield put(delete_file_okay());
+    yield put(delete_file_okay(fileID));
   } catch (err) {
     console.log(err.response);
   }

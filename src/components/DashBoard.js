@@ -8,14 +8,18 @@ class DashBoard extends Component {
   componentDidMount() {
     if (this.props.data.length === 0) {
       this.props.loadData();
+      //console.log("data array is empty");
     }
   }
   render() {
-    let pieData = this.props.data.map(pie => ({
+    let pieData;
+
+    pieData = this.props.data.map(pie => ({
       name: pie.type,
       value: pie.files.length,
       files: pie.files
     }));
+
     return (
       <div>
         <h1>This is Dash board</h1>
