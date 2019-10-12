@@ -64,7 +64,7 @@ const File = props => {
         <Button
           to={{
             pathname: `/dashboard/data/${trim_data(props.type)}`,
-            state: { data: props.files, type: props.type }
+            state: { type: props.type }
           }}
           component={AdapterLink}
           style={{ color: "darkblue" }}

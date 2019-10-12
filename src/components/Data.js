@@ -23,33 +23,37 @@ const useStyles = makeStyles(theme => ({
 
 const Data = props => {
   const classes = useStyles();
-
+  const fileType = props.location.state.type;
   return (
     <div className={classes.root}>
       <h1 style={{ textAlign: "center" }}>{props.location.state.type}</h1>
       <List aria-label="main mailbox folders">
-        {props.location.state.data.map(file => {
-          return (
-            <ListItem
-              onClick={() => props.download(file.id)}
-              button
-              key={file.id}
-            >
-              <ListItemIcon>
-                <FolderIcon style={{ color: "pink" }} />
-              </ListItemIcon>
-              <ListItemText primary={file.name} />
-              <ListItemSecondaryAction>
-                <IconButton
-                  onClick={() => props.deleteFile(file.id)}
-                  edge="end"
-                  aria-label="delete"
+        {props.data.map(file => {
+          if (file.type === fileType) {
+            return file.files.map(fileDetail => {
+              return (
+                <ListItem
+                  onClick={() => props.download(fileDetail.id)}
+                  button
+                  key={file.id}
                 >
-                  <DeleteIcon style={{ color: "red" }} />
-                </IconButton>
-              </ListItemSecondaryAction>
-            </ListItem>
-          );
+                  <ListItemIcon>
+                    <FolderIcon style={{ color: "pink" }} />
+                  </ListItemIcon>
+                  <ListItemText primary={fileDetail.name} />
+                  <ListItemSecondaryAction>
+                    <IconButton
+                      onClick={() => props.deleteFile(fileDetail.id)}
+                      edge="end"
+                      aria-label="delete"
+                    >
+                      <DeleteIcon style={{ color: "red" }} />
+                    </IconButton>
+                  </ListItemSecondaryAction>
+                </ListItem>
+              );
+            });
+          } else return null;
         })}
       </List>
       {props.loading ? (
@@ -65,7 +69,8 @@ const mapDispatchToProps = dispatch => ({
   deleteFile: fileID => dispatch(delete_file(fileID))
 });
 const mapStateToProps = state => ({
-  loading: state.data.loading
+  loading: state.data.loading,
+  data: state.data.data
 });
 export default connect(
   mapStateToProps,

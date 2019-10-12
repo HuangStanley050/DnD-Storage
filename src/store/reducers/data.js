@@ -18,8 +18,7 @@ const reducer = (state = initialState, action) => {
           newData.push({ ...fileType, files: tempFileArray });
         }
       });
-      // console.log("old data is ", state.data);
-      // console.log("new data is: ", newData);
+
       return {
         ...state,
         data: [...newData],
