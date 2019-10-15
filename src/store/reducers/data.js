@@ -2,11 +2,17 @@ import * as actionType from "../actions/actionTypes";
 const initialState = {
   data: [],
   loading: false,
-  uploadSuccess: false
+  uploadSuccess: false,
+  needUpdate: false
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case actionType.NO_NEED_UPDATE_DASHBOARD:
+      return {
+        ...state,
+        needUpdate: false
+      };
     case actionType.DELETE_OKAY:
       let newData = [];
 
@@ -51,7 +57,8 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        uploadSuccess: true
+        uploadSuccess: true,
+        needUpdate: true
       };
     case actionType.UPLOAD_FAIL:
       return {

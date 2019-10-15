@@ -3,7 +3,7 @@ import API from "../../config/api";
 import axios from "axios";
 import { upload_fail, upload_okay } from "../actions/uploadActions";
 import { get_data_okay, delete_file_okay } from "../actions/getDataAction";
-import { takeEvery, put, select } from "redux-saga/effects";
+import { takeEvery, put } from "redux-saga/effects";
 
 export default function* dataSagaWatcher() {
   yield takeEvery(actionType.UPLOAD_START, dataUploadWorker);

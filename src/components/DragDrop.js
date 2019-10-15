@@ -63,6 +63,7 @@ class DragDrop extends Component {
       return;
     }
     this.props.uploadFiles(files);
+
     this.setState({ files: [], currentSize: 0, totalSize: 0 });
   };
 

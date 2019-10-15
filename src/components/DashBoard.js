@@ -1,15 +1,24 @@
 import React, { Component } from "react";
 import { get_data_start } from "../store/actions/getDataAction";
+import { noNeedUpdateDashBoard } from "../store/actions/uploadActions";
 import { connect } from "react-redux";
 import PieChartComponent from "./chart/pieChart";
 import FileList from "./chart/FileList";
 
 class DashBoard extends Component {
   componentDidMount() {
+    console.log("mounting");
     if (this.props.data.length === 0) {
+      this.props.loadData();
+      console.log("mounting and updating");
+    }
+    if (this.props.needUpdate) {
+      console.log("need to update again");
+      this.props.turnOffUpdate();
       this.props.loadData();
     }
   }
+
   render() {
     let pieData;
 
@@ -29,10 +38,12 @@ class DashBoard extends Component {
   }
 }
 const mapStateToProps = state => ({
-  data: state.data.data
+  data: state.data.data,
+  needUpdate: state.data.needUpdate
 });
 const mapDispatchToProps = dispatch => ({
-  loadData: () => dispatch(get_data_start())
+  loadData: () => dispatch(get_data_start()),
+  turnOffUpdate: () => dispatch(noNeedUpdateDashBoard())
 });
 export default connect(
   mapStateToProps,

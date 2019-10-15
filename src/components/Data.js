@@ -35,7 +35,7 @@ const Data = props => {
                 <ListItem
                   onClick={() => props.download(fileDetail.id)}
                   button
-                  key={file.id}
+                  key={fileDetail.id}
                 >
                   <ListItemIcon>
                     <FolderIcon style={{ color: "pink" }} />

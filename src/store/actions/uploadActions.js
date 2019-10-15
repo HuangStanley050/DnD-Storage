@@ -10,3 +10,9 @@ export const upload_okay = response => ({
   response
 });
 export const resetUploadStatus = () => ({ type: actionType.UPLOAD_RESET });
+export const noNeedUpdateDashBoard = () => ({
+  type: actionType.NO_NEED_UPDATE_DASHBOARD
+});
+// export const needUpdateDashBoard = () => ({
+//   type: actionType.NEED_UPDATE_DASHBOARD
+// });
