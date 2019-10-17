@@ -127,6 +127,9 @@ const Login = props => {
             </form>
           </Grid>
         </Grid>
+        {props.error ? (
+          <h3 style={{ textAlign: "center", color: "red" }}>{props.error}</h3>
+        ) : null}
         {props.loading ? (
           <div
             style={{
@@ -144,7 +147,8 @@ const Login = props => {
 };
 const mapStateToProps = state => ({
   isAuth: state.auth.isAuth,
-  loading: state.auth.loading
+  loading: state.auth.loading,
+  error: state.auth.error
 });
 const mapDispatchToProps = dispatch => {
   return {

@@ -7,13 +7,10 @@ import FileList from "./chart/FileList";
 
 class DashBoard extends Component {
   componentDidMount() {
-    console.log("mounting");
     if (this.props.data.length === 0) {
       this.props.loadData();
-      console.log("mounting and updating");
     }
     if (this.props.needUpdate) {
-      console.log("need to update again");
       this.props.turnOffUpdate();
       this.props.loadData();
     }

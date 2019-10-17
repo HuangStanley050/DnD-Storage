@@ -18,6 +18,7 @@ function* authLoginWorker(action) {
     yield localStorage.setItem("File-Uploader", token);
     yield put(login_okay());
   } catch (err) {
-    console.log(err.response);
+    //console.log(err.response);
+    yield put(login_fail(err.response.data.message));
   }
 }
