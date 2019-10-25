@@ -1,7 +1,7 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Link as RouterLink } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { logout } from "../store/actions/authAction";
 import { connect } from "react-redux";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -13,8 +13,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import DescriptionIcon from "@material-ui/icons/Description";
 import ExitIcon from "@material-ui/icons/ExitToApp";
-
-//import Link from "@material-ui/core/Link";
+import { logout } from "../store/actions/authAction";
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -39,14 +38,15 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1
   }
 }));
+
 const AdapterLink = React.forwardRef((props, ref) => {
-  //console.log("props====>", props);
-  //console.log("ref====>", ref);
   return <RouterLink innerRef={ref} {...props} />;
 });
+
 const Navbar = props => {
   const classes = useStyles();
-  const logout_links = (
+  const { isAuth } = props;
+  const logoutLinks = (
     <Button
       component={AdapterLink}
       to="/login"
@@ -57,7 +57,7 @@ const Navbar = props => {
       Login
     </Button>
   );
-  const login_links = (
+  const loginLinks = (
     <>
       <Button
         component={AdapterLink}
@@ -118,12 +118,17 @@ const Navbar = props => {
             File Uploader
           </Typography>
 
-          {props.isAuth ? login_links : logout_links}
+          {isAuth ? loginLinks : logoutLinks}
         </Toolbar>
       </AppBar>
     </div>
   );
 };
+Navbar.propTypes = {
+  isAuth: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired
+};
+
 const mapStateToProps = state => ({ isAuth: state.auth.isAuth });
 const mapDispatchToProps = dispatch => ({ logout: () => dispatch(logout()) });
 export default connect(

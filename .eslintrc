@@ -8,8 +8,10 @@
   ],
   "plugins": ["jsx-a11y", "prettier"],
   "rules": {
+    "quotes": [1, "double", { "avoidEscape": false }],
     "semi": 1,
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-    "prettier/prettier": ["error"]
+    "prettier/prettier": ["error"],
+    "react/jsx-props-no-spreading": "off"
   }
 }

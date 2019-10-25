@@ -3,7 +3,8 @@ import createSagaMiddleware from "redux-saga";
 import authReducer from "./store/reducers/auth";
 import dataReducer from "./store/reducers/data";
 import errorReducer from "./store/reducers/error";
-import rootSaga from "./store/sagas/";
+import rootSaga from "./store/sagas";
+
 const composeEnhancers =
   process.env.NODE_ENV === "development"
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
