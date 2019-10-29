@@ -4,13 +4,14 @@ import { Redirect } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
+import PropTypes from "prop-types";
 import Button from "@material-ui/core/Button";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import FormControl from "@material-ui/core/FormControl";
 import TextField from "@material-ui/core/TextField";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import SecurityIcon from "@material-ui/icons/Security";
-import { login_start } from "../store/actions/authAction";
+import { loginStart } from "../store/actions/authAction";
 import Loader from "./Loader";
 
 const useStyles = makeStyles(theme => ({
@@ -44,7 +45,7 @@ const useForm = () => {
       [e.target.name]: e.target.value
     });
   };
-  const resetFields = fieldName => {
+  const resetFields = () => {
     setValue({
       ...form,
       email: "",
@@ -58,12 +59,13 @@ const useForm = () => {
 const Login = props => {
   const classes = useStyles();
   const [form, handleChange, resetFields] = useForm();
+  const { isAuth, loading, error } = props;
   const submitHandler = e => {
     e.preventDefault();
     props.login(form);
     resetFields();
   };
-  if (props.isAuth) {
+  if (isAuth) {
     return <Redirect to="/dashboard" />;
   }
   return (
@@ -127,10 +129,10 @@ const Login = props => {
             </form>
           </Grid>
         </Grid>
-        {props.error ? (
-          <h3 style={{ textAlign: "center", color: "red" }}>{props.error}</h3>
+        {error ? (
+          <h3 style={{ textAlign: "center", color: "red" }}>{error}</h3>
         ) : null}
-        {props.loading ? (
+        {loading ? (
           <div
             style={{
               display: "flex",
@@ -145,6 +147,13 @@ const Login = props => {
     </div>
   );
 };
+Login.propTypes = {
+  isAuth: PropTypes.bool.isRequired,
+  login: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
+  error: PropTypes.string.isRequired
+};
+
 const mapStateToProps = state => ({
   isAuth: state.auth.isAuth,
   loading: state.auth.loading,
@@ -152,7 +161,7 @@ const mapStateToProps = state => ({
 });
 const mapDispatchToProps = dispatch => {
   return {
-    login: userInfo => dispatch(login_start(userInfo))
+    login: userInfo => dispatch(loginStart(userInfo))
   };
 };
 export default connect(

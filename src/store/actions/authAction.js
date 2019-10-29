@@ -1,6 +1,6 @@
 import * as actionType from "./actionTypes";
 
-export const login_start = userInfo => ({
+export const loginStart = userInfo => ({
   type: actionType.LOGIN_START,
   userInfo
 });
