@@ -1,6 +1,5 @@
 import React from "react";
 
-export default props => {
-  //console.log("This is from landing===>", props);
+export default () => {
   return <h1>Landing Page</h1>;
 };

@@ -1,7 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-//import Grid from "@material-ui/core/Grid";
-//import Typography from "@material-ui/core/Typography";
+import PropTypes from "prop-types";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
@@ -26,15 +25,15 @@ const useStyles = makeStyles(theme => ({
 
 const FileListUpload = props => {
   const classes = useStyles();
-  const [dense, setDense] = React.useState(false);
-  const [secondary, setSecondary] = React.useState(false);
+  const [dense] = React.useState(false);
+  const { files } = props;
 
   return (
     <div className={classes.root}>
       <div className={classes.demo}>
-        {props.files.length === 0 ? null : (
+        {files.length === 0 ? null : (
           <List dense={dense}>
-            {props.files.map(file => {
+            {files.map(file => {
               return (
                 <ListItem key={file.id}>
                   <ListItemAvatar>
@@ -44,7 +43,7 @@ const FileListUpload = props => {
                   </ListItemAvatar>
                   <ListItemText
                     primary={file.name}
-                    secondary={(file.size / 1024 / 1024).toFixed(2) + "MB"}
+                    secondary={`${(file.size / 1024 / 1024).toFixed(2)}MB`}
                   />
                   <ListItemSecondaryAction>
                     <IconButton
@@ -52,7 +51,7 @@ const FileListUpload = props => {
                       edge="end"
                       aria-label="delete"
                     >
-                      <DeleteIcon></DeleteIcon>
+                      <DeleteIcon />
                     </IconButton>
                   </ListItemSecondaryAction>
                 </ListItem>
@@ -65,4 +64,8 @@ const FileListUpload = props => {
   );
 };
 
+FileListUpload.propTypes = {
+  files: PropTypes.arrayOf.isRequired,
+  deleteFile: PropTypes.func.isRequired
+};
 export default FileListUpload;
