@@ -125,7 +125,7 @@ const Navbar = props => {
   );
 };
 Navbar.propTypes = {
-  isAuth: PropTypes.func.isRequired,
+  isAuth: PropTypes.bool.isRequired,
   logout: PropTypes.func.isRequired
 };
 

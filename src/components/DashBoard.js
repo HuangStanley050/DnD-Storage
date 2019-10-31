@@ -37,11 +37,12 @@ class DashBoard extends Component {
   }
 }
 DashBoard.defaultProps = {
-  length: 0
+  length: 0,
+  data: []
 };
 
 DashBoard.propTypes = {
-  data: PropTypes.arrayOf.isRequired,
+  data: PropTypes.arrayOf(PropTypes.object),
   loadData: PropTypes.func.isRequired,
   turnOffUpdate: PropTypes.func.isRequired,
   needUpdate: PropTypes.bool.isRequired,
