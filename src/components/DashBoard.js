@@ -1,25 +1,27 @@
 import React, { Component } from "react";
-import { get_data_start } from "../store/actions/getDataAction";
-import { noNeedUpdateDashBoard } from "../store/actions/uploadActions";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { getDataStart } from "../store/actions/getDataAction";
+import { noNeedUpdateDashBoard } from "../store/actions/uploadActions";
 import PieChartComponent from "./chart/pieChart";
 import FileList from "./chart/FileList";
 
 class DashBoard extends Component {
   componentDidMount() {
-    if (this.props.data.length === 0) {
-      this.props.loadData();
+    const { length, loadData, turnOffUpdate, needUpdate } = this.props;
+
+    if (length === 0) {
+      loadData();
     }
-    if (this.props.needUpdate) {
-      this.props.turnOffUpdate();
-      this.props.loadData();
+    if (needUpdate) {
+      turnOffUpdate();
+      loadData();
     }
   }
 
   render() {
-    let pieData;
-
-    pieData = this.props.data.map(pie => ({
+    const { data } = this.props;
+    const pieData = data.map(pie => ({
       name: pie.type,
       value: pie.files.length,
       files: pie.files
@@ -34,12 +36,24 @@ class DashBoard extends Component {
     );
   }
 }
+DashBoard.defaultProps = {
+  length: 0
+};
+
+DashBoard.propTypes = {
+  data: PropTypes.arrayOf.isRequired,
+  loadData: PropTypes.func.isRequired,
+  turnOffUpdate: PropTypes.func.isRequired,
+  needUpdate: PropTypes.bool.isRequired,
+  length: PropTypes.number
+};
+
 const mapStateToProps = state => ({
   data: state.data.data,
   needUpdate: state.data.needUpdate
 });
 const mapDispatchToProps = dispatch => ({
-  loadData: () => dispatch(get_data_start()),
+  loadData: () => dispatch(getDataStart()),
   turnOffUpdate: () => dispatch(noNeedUpdateDashBoard())
 });
 export default connect(

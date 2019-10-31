@@ -1,8 +1,8 @@
 import * as actionType from "./actionTypes";
 
-export const get_data_start = () => ({ type: actionType.GET_DATA_START });
-export const get_data_okay = data => ({ type: actionType.GET_DATA_OKAY, data });
-export const get_data_fail = err => ({ type: actionType.GET_DATA_FAIL, err });
+export const getDataStart = () => ({ type: actionType.GET_DATA_START });
+export const getDataOkay = data => ({ type: actionType.GET_DATA_OKAY, data });
+export const getDataFail = err => ({ type: actionType.GET_DATA_FAIL, err });
 
 export const getDownloadData = fileID => ({
   type: actionType.REQUEST_DOWNLOAD,
@@ -14,8 +14,8 @@ export const deleteFile = fileID => ({
   fileID
 });
 
-export const delete_file_okay = fileID => ({
+export const deleteFileOkay = fileID => ({
   type: actionType.DELETE_OKAY,
   fileID
 });
-export const deleteF_file_fail = () => ({ type: actionType.DELETE_FAIL });
+export const deleteFileFail = () => ({ type: actionType.DELETE_FAIL });
