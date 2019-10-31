@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import { PieChart, Pie, Cell } from "recharts";
-import { define_color } from "./colorHelper";
+import PropTypes from "prop-types";
+import defineColor from "./colorHelper";
 
 const RADIAN = Math.PI / 180;
 
@@ -37,12 +38,13 @@ class PieChartComponent extends PureComponent {
       justifyContent: "center",
       alignItems: "center"
     };
+    const { pieData } = this.props;
     return (
       <div style={pieChartStyle}>
         <PieChart width={800} height={450} onMouseEnter={this.onPieEnter}>
           <Pie
             dataKey="value"
-            data={this.props.pieData}
+            data={pieData}
             cx={400}
             cy={200}
             labelLine={false}
@@ -50,11 +52,8 @@ class PieChartComponent extends PureComponent {
             outerRadius={200}
             fill="#8884d8"
           >
-            {this.props.pieData.map((entry, index) => {
-              //console.log(entry);
-              //console.log(define_color(entry.name));
-              //COLORS[index % COLORS.length]
-              return <Cell key={index} fill={define_color(entry.name)} />;
+            {pieData.map((entry, index) => {
+              return <Cell key={entry.name} fill={defineColor(entry.name)} />;
             })}
           </Pie>
         </PieChart>
@@ -62,8 +61,7 @@ class PieChartComponent extends PureComponent {
     );
   }
 }
-
-// const mapStateToProps = state => ({
-//   data: state.data.data
-// });
+PieChartComponent.propTypes = {
+  pieData: PropTypes.arrayof(Proptypes.object).isRequired
+};
 export default PieChartComponent;
