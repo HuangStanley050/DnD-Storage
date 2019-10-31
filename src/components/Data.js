@@ -34,14 +34,11 @@ const Data = props => {
     }
   } = props;
 
-  console.log(fileType);
-  console.log(props.location.state);
-
   return (
     <div className={classes.root}>
       <h1 style={{ textAlign: "center" }}>{fileType}</h1>
       <List aria-label="main mailbox folders">
-        {props.data.map(file => {
+        {data.map(file => {
           if (file.type === fileType) {
             return file.files.map(fileDetail => {
               return (
@@ -80,11 +77,11 @@ const Data = props => {
 };
 
 Data.propTypes = {
-  //   data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  data: PropTypes.shape().isRequired,
   download: PropTypes.func.isRequired,
   deletefile: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired
-  //   fileType: PropTypes.string.isRequired
+  loading: PropTypes.bool.isRequired,
+  location: PropTypes.shape().isRequired
 };
 
 const mapDispatchToProps = dispatch => ({
