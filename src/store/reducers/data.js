@@ -1,4 +1,5 @@
 import * as actionType from "../actions/actionTypes";
+
 const initialState = {
   data: [],
   loading: false,
@@ -7,6 +8,7 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action) => {
+  const newData = [];
   switch (action.type) {
     case actionType.NO_NEED_UPDATE_DASHBOARD:
       return {
@@ -14,10 +16,8 @@ const reducer = (state = initialState, action) => {
         needUpdate: false
       };
     case actionType.DELETE_OKAY:
-      let newData = [];
-
       state.data.forEach(fileType => {
-        let tempFileArray = fileType.files.filter(
+        const tempFileArray = fileType.files.filter(
           file => file.id !== action.fileID
         );
         if (tempFileArray.length !== 0) {
