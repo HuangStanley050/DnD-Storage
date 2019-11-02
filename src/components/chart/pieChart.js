@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 import { PieChart, Pie, Cell } from "recharts";
 import PropTypes from "prop-types";
 import defineColor from "./colorHelper";
@@ -31,7 +31,8 @@ const renderCustomizedLabel = ({
     </text>
   );
 };
-class PieChartComponent extends PureComponent {
+
+class PieChartComponent extends Component {
   render() {
     const pieChartStyle = {
       margin: "1rem auto",
