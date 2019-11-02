@@ -1,26 +1,17 @@
 import React, { Component } from "react";
-import Loader from "./Loader";
 import uuid from "uuid/v4";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import {
-  upload_start,
-  resetUploadStatus
-} from "../store/actions/uploadActions";
 import Dropzone from "react-dropzone";
-
-import FileListUpload from "./FileListUpload";
 import BackupIcon from "@material-ui/icons/Backup";
 import Snackbar from "@material-ui/core/Snackbar";
 import SnackbarContent from "@material-ui/core/SnackbarContent";
 import Button from "@material-ui/core/Button";
+import { uploadStart, resetUploadStatus } from "../store/actions/uploadActions";
+import FileListUpload from "./FileListUpload";
+import Loader from "./Loader";
 
 class DragDrop extends Component {
-  componentDidUpdate(prevProps, prevState) {
-    if (this.props.uploadSuccess !== prevState.snackbarOpen) {
-      this.setState({ snackbarOpen: true });
-    }
-  }
-
   maxSize = 5242880;
 
   state = {
@@ -33,11 +24,20 @@ class DragDrop extends Component {
     horizontal: "right"
   };
 
+  componentDidUpdate(prevProps, prevState) {
+    const { uploadSuccess } = this.props;
+    if (uploadSuccess !== prevState.snackbarOpen) {
+      this.setState({ snackbarOpen: true });
+    }
+  }
+
   deleteFile = id => {
-    const files = this.state.files;
+    const { files } = this.state;
     let totalSize = 0;
-    let newFiles = files.filter(file => file.id !== id);
-    newFiles.forEach(file => (totalSize += file.size));
+    const newFiles = files.filter(file => file.id !== id);
+    newFiles.forEach(file => {
+      totalSize += file.size;
+    });
     totalSize = totalSize / 1024 / 1024;
     this.setState(state => {
       return {
@@ -50,26 +50,26 @@ class DragDrop extends Component {
   };
 
   handleClose = () => {
+    const { reset } = this.props;
     this.setState({ snackbarOpen: false });
-    this.props.reset();
+    reset();
   };
 
   handleSubmit = e => {
     e.preventDefault();
-
-    const files = this.state.files;
+    const { files } = this.state;
+    const { uploadFiles } = this.props;
     if (files.length === 0) {
       alert("You can't submit, you have no files uploaded");
       return;
     }
-    this.props.uploadFiles(files);
-
+    uploadFiles(files);
     this.setState({ files: [], currentSize: 0, totalSize: 0 });
   };
 
   handleDrop = (file, rejectedFile) => {
     if (rejectedFile.length !== 0) {
-      //console.log("this has been rejected", rejectedFile);
+      // console.log("this has been rejected", rejectedFile);
       this.setState(state => {
         return {
           ...state,
@@ -80,12 +80,13 @@ class DragDrop extends Component {
     }
 
     const upLoadFile = file[0];
-    let id = uuid();
+    const { totalSize: Size } = this.state;
+    const id = uuid();
     upLoadFile.id = id;
-    let totalSize = this.state.totalSize + upLoadFile.size / 1024 / 1024;
+    const totalSize = Size + upLoadFile.size / 1024 / 1024;
 
     if (totalSize > 5.24288) {
-      //console.log("You have exceeded the total allowed upload size");
+      // console.log("You have exceeded the total allowed upload size");
       this.setState({
         currentSize: totalSize,
         errorMsg: "You have exceeded the total allowed upload size"
@@ -105,6 +106,15 @@ class DragDrop extends Component {
   };
 
   render() {
+    const {
+      errorMsg,
+      vertical,
+      horizontal,
+      snackbarOpen,
+      currentSize,
+      files
+    } = this.state;
+    const { uploadSuccess, loading } = this.props;
     const iconStyle = {
       width: "100px",
       height: "100px",
@@ -113,62 +123,47 @@ class DragDrop extends Component {
       bottom: "0",
       right: "0",
       margin: "auto",
-      color: this.state.errorMsg ? "#cf5148" : "blue"
+      color: errorMsg ? "#cf5148" : "blue"
     };
-
     const wrapper = {
       display: "flex",
       minHeight: "100vh",
-      //position: "fixed", //======================> this caused the issue with routing, don't know why
+      // position: "fixed", //======================> this caused the issue with routing, don't know why
       justifyContent: "center",
       alignItems: "center",
       flexDirection: "column"
     };
-
     const buttonStyle = {
       border: "1px solid rgba(25, 118, 210, 0.5)"
     };
-
-    // if (this.props.uploadSuccess) {
-    //   snacksbarOpen = true;
-    // }
 
     return (
       <div style={wrapper}>
         <Snackbar
           anchorOrigin={{
-            vertical: this.state.vertical,
-            horizontal: this.state.horizontal
+            vertical,
+            horizontal
           }}
-          key={`${this.state.vertical},${this.state.horizontal}`}
-          open={this.state.snackbarOpen}
+          key={`${vertical},${horizontal}`}
+          open={snackbarOpen}
           onClose={this.handleClose}
           ContentProps={{
             "aria-describedby": "message-id"
           }}
-          // message={
-          //   this.props.uploadSuccess ? (
-          //     <span id="message-id">Upload Success</span>
-          //   ) : (
-          //     <span id="message-id">Upload Failed</span>
-          //   )
-          // }
         >
           <SnackbarContent
             style={
-              this.props.uploadSuccess
+              uploadSuccess
                 ? { backgroundColor: "green" }
                 : { backgroundColor: "red" }
             }
-            message={
-              this.props.uploadSuccess ? "Upload Successful" : "Upload failed"
-            }
+            message={uploadSuccess ? "Upload Successful" : "Upload failed"}
           />
         </Snackbar>
 
         <div style={{ height: "200px", width: "400px" }}>
           <Dropzone
-            //disabled={this.state.disabled}
+            // disabled={this.state.disabled}
             minSize={0}
             maxSize={this.maxSize}
             onDrop={this.handleDrop}
@@ -190,7 +185,7 @@ class DragDrop extends Component {
                   {...getRootProps()}
                 >
                   <input {...getInputProps()} />
-                  Drag 'n' drop some files here, or click to select files
+                  Drag and drop some files here, or click to select files
                   <BackupIcon style={iconStyle} />
                 </div>
               );
@@ -204,10 +199,10 @@ class DragDrop extends Component {
             }}
           >
             <h3>Files upload Limit: 5MB</h3>
-            <h4>Current: {this.state.currentSize.toFixed(2)}MB</h4>
-            {this.state.errorMsg ? (
+            <h4>Current: {currentSize.toFixed(2)}MB</h4>
+            {errorMsg ? (
               <div>
-                <h3 style={{ color: "red" }}>{this.state.errorMsg}</h3>
+                <h3 style={{ color: "red" }}>{errorMsg}</h3>
               </div>
             ) : null}
           </div>
@@ -219,9 +214,7 @@ class DragDrop extends Component {
             }}
           >
             <Button
-              disabled={
-                this.state.errorMsg || this.props.loading ? true : false
-              }
+              disabled={!!(errorMsg || loading)}
               onClick={this.handleSubmit}
               style={buttonStyle}
               variant="outlined"
@@ -230,21 +223,26 @@ class DragDrop extends Component {
             </Button>
           </div>
           <div style={{ textAlign: "center" }}>
-            {this.props.loading ? <Loader /> : null}
+            {loading ? <Loader /> : null}
           </div>
           <div>
-            <FileListUpload
-              files={this.state.files}
-              deleteFile={this.deleteFile}
-            />
+            <FileListUpload files={files} deleteFile={this.deleteFile} />
           </div>
         </div>
       </div>
     );
   }
 }
+
+DragDrop.propTypes = {
+  uploadSuccess: PropTypes.bool.isRequired,
+  reset: PropTypes.func.isRequired,
+  uploadFiles: PropTypes.func.isRequired,
+  loading: PropTypes.func.isRequired
+};
+
 const mapDispatchToProps = dispatch => ({
-  uploadFiles: files => dispatch(upload_start(files)),
+  uploadFiles: files => dispatch(uploadStart(files)),
   reset: () => dispatch(resetUploadStatus())
 });
 

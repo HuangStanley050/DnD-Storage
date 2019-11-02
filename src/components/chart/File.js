@@ -38,7 +38,7 @@ const File = ({ type, number }) => {
     const newStr = str.slice(index + 1, str.length);
     return newStr;
   };
-  // trim_data(props.type);
+
   return (
     <Card className={classes.card}>
       <CardContent>

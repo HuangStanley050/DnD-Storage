@@ -14,6 +14,8 @@
     "prettier/prettier": ["error"],
     "react/jsx-props-no-spreading": "off",
     "prefer-template": 2,
-    "no-unused-vars": "off"
+    "no-unused-vars": "off",
+    "react/state-in-constructor": [0],
+    "react/no-did-update-set-state": [0]
   }
 }
