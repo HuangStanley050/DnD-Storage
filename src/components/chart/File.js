@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -30,12 +31,12 @@ const useStyles = makeStyles({
   }
 });
 
-const File = props => {
+const File = ({ type, number }) => {
   const classes = useStyles();
-  const trim_data = str => {
+  const trimData = str => {
     const index = str.indexOf("/");
-    const new_str = str.slice(index + 1, str.length);
-    return new_str;
+    const newStr = str.slice(index + 1, str.length);
+    return newStr;
   };
   // trim_data(props.type);
   return (
@@ -45,26 +46,26 @@ const File = props => {
           style={{
             textAlign: "center",
             color: "white",
-            backgroundColor: defineColor(props.type)
+            backgroundColor: defineColor(type)
           }}
           variant="h5"
           component="h2"
         >
-          {props.type}
+          {type}
         </Typography>
         <Typography
           style={{ marginTop: "1rem", textAlign: "center", color: "white" }}
           variant="h6"
           component="h4"
         >
-          Number of Files: {props.number}
+          Number of Files: {number}
         </Typography>
       </CardContent>
       <CardActions style={{ justifyContent: "center" }}>
         <Button
           to={{
-            pathname: `/dashboard/data/${trim_data(props.type)}`,
-            state: { type: props.type }
+            pathname: `/dashboard/data/${trimData(type)}`,
+            state: { type }
           }}
           component={AdapterLink}
           style={{ color: "darkblue" }}
@@ -75,6 +76,11 @@ const File = props => {
       </CardActions>
     </Card>
   );
+};
+
+File.propTypes = {
+  type: PropTypes.string.isRequired,
+  number: PropTypes.number.isRequired
 };
 
 export default File;
