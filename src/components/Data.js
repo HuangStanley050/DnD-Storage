@@ -77,7 +77,7 @@ const Data = props => {
 };
 
 Data.propTypes = {
-  data: PropTypes.shape().isRequired,
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
   download: PropTypes.func.isRequired,
   deletefile: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,

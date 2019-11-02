@@ -65,7 +65,7 @@ const FileListUpload = props => {
 };
 
 FileListUpload.propTypes = {
-  files: PropTypes.arrayOf.isRequired,
+  files: PropTypes.arrayOf(PropTypes.object).isRequired,
   deleteFile: PropTypes.func.isRequired
 };
 export default FileListUpload;

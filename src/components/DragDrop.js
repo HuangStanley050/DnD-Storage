@@ -238,7 +238,7 @@ DragDrop.propTypes = {
   uploadSuccess: PropTypes.bool.isRequired,
   reset: PropTypes.func.isRequired,
   uploadFiles: PropTypes.func.isRequired,
-  loading: PropTypes.func.isRequired
+  loading: PropTypes.bool.isRequired
 };
 
 const mapDispatchToProps = dispatch => ({

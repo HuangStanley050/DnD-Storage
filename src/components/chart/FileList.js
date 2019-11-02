@@ -39,6 +39,6 @@ const FileList = ({ pieData }) => {
   );
 };
 FileList.propTypes = {
-  pieData: PropTypes.shape().isRequired
+  pieData: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 export default FileList;
