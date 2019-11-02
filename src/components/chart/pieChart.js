@@ -17,7 +17,8 @@ const renderCustomizedLabel = ({
   const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
   const x = cx + radius * Math.cos(-midAngle * RADIAN);
   const y = cy + radius * Math.sin(-midAngle * RADIAN);
-
+  console.log("Rendering from the piechart label");
+  console.log(`${(percent * 100).toFixed(0)}%`);
   return (
     <text
       x={x}
@@ -52,7 +53,7 @@ class PieChartComponent extends PureComponent {
             outerRadius={200}
             fill="#8884d8"
           >
-            {pieData.map((entry, index) => {
+            {pieData.map(entry => {
               return <Cell key={entry.name} fill={defineColor(entry.name)} />;
             })}
           </Pie>
@@ -62,6 +63,18 @@ class PieChartComponent extends PureComponent {
   }
 }
 PieChartComponent.propTypes = {
-  pieData: PropTypes.arrayof(Proptypes.object).isRequired
+  pieData: PropTypes.arrayOf(PropTypes.object).isRequired
+};
+renderCustomizedLabel.defaultProps = {
+  index: 0
+};
+renderCustomizedLabel.propTypes = {
+  cx: PropTypes.number.isRequired,
+  cy: PropTypes.number.isRequired,
+  midAngle: PropTypes.number.isRequired,
+  innerRadius: PropTypes.number.isRequired,
+  outerRadius: PropTypes.number.isRequired,
+  percent: PropTypes.number.isRequired,
+  index: PropTypes.number
 };
 export default PieChartComponent;

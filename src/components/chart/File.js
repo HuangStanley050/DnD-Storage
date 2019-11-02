@@ -6,7 +6,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { Link as RouterLink } from "react-router-dom";
-import { define_color } from "./colorHelper";
+import defineColor from "./colorHelper";
 
 const AdapterLink = React.forwardRef((props, ref) => {
   return <RouterLink innerRef={ref} {...props} />;
@@ -33,11 +33,11 @@ const useStyles = makeStyles({
 const File = props => {
   const classes = useStyles();
   const trim_data = str => {
-    let index = str.indexOf("/");
-    let new_str = str.slice(index + 1, str.length);
+    const index = str.indexOf("/");
+    const new_str = str.slice(index + 1, str.length);
     return new_str;
   };
-  //trim_data(props.type);
+  // trim_data(props.type);
   return (
     <Card className={classes.card}>
       <CardContent>
@@ -45,7 +45,7 @@ const File = props => {
           style={{
             textAlign: "center",
             color: "white",
-            backgroundColor: define_color(props.type)
+            backgroundColor: defineColor(props.type)
           }}
           variant="h5"
           component="h2"
