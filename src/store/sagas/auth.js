@@ -4,10 +4,6 @@ import * as actionType from "../actions/actionTypes";
 import { loginFail, loginOkay } from "../actions/authAction";
 import API from "../../config/api";
 
-export default function* authSagaWatcher() {
-  yield takeEvery(actionType.LOGIN_START, authLoginWorker);
-}
-
 function* authLoginWorker(action) {
   const userData = action.userInfo;
   let token;
@@ -21,4 +17,7 @@ function* authLoginWorker(action) {
     // console.log(err.response);
     yield put(loginFail(err.response.data.message));
   }
+}
+export default function* authSagaWatcher() {
+  yield takeEvery(actionType.LOGIN_START, authLoginWorker);
 }

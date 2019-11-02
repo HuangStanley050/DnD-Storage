@@ -5,12 +5,6 @@ import API from "../../config/api";
 import { uploadFail, uploadOkay } from "../actions/uploadActions";
 import { getDataOkay, deleteFileOkay } from "../actions/getDataAction";
 
-export default function* dataSagaWatcher() {
-  yield takeEvery(actionType.UPLOAD_START, dataUploadWorker);
-  yield takeEvery(actionType.GET_DATA_START, dataFetchWorker);
-  yield takeEvery(actionType.REQUEST_DOWNLOAD, dataDownloadWorker);
-  yield takeEvery(actionType.DELETE_START, dataDeleteWorker);
-}
 function* dataDeleteWorker(action) {
   const token = localStorage.getItem("File-Uploader");
   const { fileID } = action;
@@ -63,14 +57,15 @@ function* dataFetchWorker(action) {
 }
 
 function* dataUploadWorker(action) {
-  // yield console.log("This is from upload saga worker");
-  // yield console.log(action.files);
   const formData = new FormData();
   const token = localStorage.getItem("File-Uploader");
   const { files } = action;
-  for (const file of files) {
+  // for (const file of files) {
+  //   formData.append("files", file);
+  // }
+  files.forEach(file => {
     formData.append("files", file);
-  }
+  });
   try {
     yield axios({
       headers: { Authorization: `bearer ${token}` },
@@ -83,4 +78,11 @@ function* dataUploadWorker(action) {
     // console.log(err.response);
     yield put(uploadFail("upload failed"));
   }
+}
+
+export default function* dataSagaWatcher() {
+  yield takeEvery(actionType.UPLOAD_START, dataUploadWorker);
+  yield takeEvery(actionType.GET_DATA_START, dataFetchWorker);
+  yield takeEvery(actionType.REQUEST_DOWNLOAD, dataDownloadWorker);
+  yield takeEvery(actionType.DELETE_START, dataDeleteWorker);
 }
