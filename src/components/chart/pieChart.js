@@ -1,5 +1,6 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { PieChart, Pie, Cell } from "recharts";
+import { equals } from "ramda";
 import PropTypes from "prop-types";
 import defineColor from "./colorHelper";
 
@@ -17,8 +18,7 @@ const renderCustomizedLabel = ({
   const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
   const x = cx + radius * Math.cos(-midAngle * RADIAN);
   const y = cy + radius * Math.sin(-midAngle * RADIAN);
-  console.log("Rendering from the piechart label");
-  console.log(`${(percent * 100).toFixed(0)}%`);
+  console.log("render text label gets invoked");
   return (
     <text
       x={x}
@@ -32,7 +32,23 @@ const renderCustomizedLabel = ({
   );
 };
 
-class PieChartComponent extends Component {
+class PieChartComponent extends PureComponent {
+  state = {
+    animate: true
+  };
+
+  getSnapshotBeforeUpdate(prevProps) {
+    const { pieData } = this.props;
+    const shouldAnimate = !equals(prevProps.pieData, pieData);
+    return shouldAnimate;
+  }
+
+  componentDidUpdate(prevProps, prevState, shouldAnimate) {
+    if (prevState.animate !== shouldAnimate) {
+      this.setState({ animate: shouldAnimate });
+    }
+  }
+
   render() {
     const pieChartStyle = {
       margin: "1rem auto",
@@ -41,10 +57,13 @@ class PieChartComponent extends Component {
       alignItems: "center"
     };
     const { pieData } = this.props;
+    const { animate } = this.state;
+    console.log("Pie data: ", pieData);
     return (
       <div style={pieChartStyle}>
         <PieChart width={800} height={450} onMouseEnter={this.onPieEnter}>
           <Pie
+            isAnimationActive={animate}
             dataKey="value"
             data={pieData}
             cx={400}

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getDataStart } from "../store/actions/getDataAction";
@@ -6,7 +6,7 @@ import { noNeedUpdateDashBoard } from "../store/actions/uploadActions";
 import PieChartComponent from "./chart/pieChart";
 import FileList from "./chart/FileList";
 
-class DashBoard extends Component {
+class DashBoard extends PureComponent {
   componentDidMount() {
     const { length, loadData, turnOffUpdate, needUpdate } = this.props;
 
