@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 
@@ -14,7 +15,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const FileList = props => {
+const FileList = ({ pieData }) => {
   const [spacing, setSpacing] = React.useState(2);
   const classes = useStyles();
 
@@ -22,7 +23,7 @@ const FileList = props => {
     <Grid container className={classes.root} spacing={2}>
       <Grid item xs={12}>
         <Grid container justify="center" spacing={spacing}>
-          {props.pieData.map(data => (
+          {pieData.map(data => (
             <Grid key={data.name} item>
               <File
                 type={data.name}
@@ -37,5 +38,7 @@ const FileList = props => {
     </Grid>
   );
 };
-
+FileList.propTypes = {
+  pieData: PropTypes.shape().isRequired
+};
 export default FileList;
