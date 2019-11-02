@@ -1,11 +1,11 @@
 import * as actionType from "./actionTypes";
 
 export const uploadStart = files => ({ type: actionType.UPLOAD_START, files });
-export const upload_fail = errorMsg => ({
+export const uploadFail = errorMsg => ({
   type: actionType.UPLOAD_FAIL,
   errorMsg
 });
-export const upload_okay = response => ({
+export const uploadOkay = response => ({
   type: actionType.UPLOAD_OKAY,
   response
 });

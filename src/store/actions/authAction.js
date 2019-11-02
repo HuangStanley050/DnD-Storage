@@ -4,8 +4,8 @@ export const loginStart = userInfo => ({
   type: actionType.LOGIN_START,
   userInfo
 });
-export const login_fail = err => ({ type: actionType.LOGIN_FAIL, err });
-export const login_okay = () => ({
+export const loginFail = err => ({ type: actionType.LOGIN_FAIL, err });
+export const loginOkay = () => ({
   type: actionType.LOGIN_OKAY
 });
 export const logout = () => ({ type: actionType.LOGOUT });

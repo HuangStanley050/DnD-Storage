@@ -2,7 +2,7 @@ import axios from "axios";
 import { takeEvery, put } from "redux-saga/effects";
 import * as actionType from "../actions/actionTypes";
 import API from "../../config/api";
-import { upload_fail, upload_okay } from "../actions/uploadActions";
+import { uploadFail, uploadOkay } from "../actions/uploadActions";
 import { getDataOkay, deleteFileOkay } from "../actions/getDataAction";
 
 export default function* dataSagaWatcher() {
@@ -78,9 +78,9 @@ function* dataUploadWorker(action) {
       url: API.upload,
       data: formData
     });
-    yield put(upload_okay("Upload Okay!"));
+    yield put(uploadOkay("Upload Okay!"));
   } catch (err) {
     // console.log(err.response);
-    yield put(upload_fail("upload failed"));
+    yield put(uploadFail("upload failed"));
   }
 }

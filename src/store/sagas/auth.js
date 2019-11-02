@@ -1,7 +1,7 @@
-import * as actionType from "../actions/actionTypes";
 import { takeEvery, put } from "redux-saga/effects";
 import axios from "axios";
-import { login_fail, login_okay } from "../actions/authAction";
+import * as actionType from "../actions/actionTypes";
+import { loginFail, loginOkay } from "../actions/authAction";
 import API from "../../config/api";
 
 export default function* authSagaWatcher() {
@@ -12,13 +12,13 @@ function* authLoginWorker(action) {
   const userData = action.userInfo;
   let token;
   try {
-    let loginResult = yield axios.post(API.login, userData);
-    //console.log(loginResult.data.token);
+    const loginResult = yield axios.post(API.login, userData);
+    // console.log(loginResult.data.token);
     token = loginResult.data.token;
     yield localStorage.setItem("File-Uploader", token);
-    yield put(login_okay());
+    yield put(loginOkay());
   } catch (err) {
-    //console.log(err.response);
-    yield put(login_fail(err.response.data.message));
+    // console.log(err.response);
+    yield put(loginFail(err.response.data.message));
   }
 }
