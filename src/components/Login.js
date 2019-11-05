@@ -56,7 +56,7 @@ const useForm = () => {
   return [form, handleChange, resetFields];
 };
 
-const Login = props => {
+export const Login = props => {
   const classes = useStyles();
   const [form, handleChange, resetFields] = useForm();
   const { isAuth, loading, error } = props;
@@ -85,6 +85,7 @@ const Login = props => {
                   name="email"
                   value={form.email}
                   label="Email"
+                  data-test="email"
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
@@ -99,6 +100,7 @@ const Login = props => {
                   id="input-with-icon-textfield"
                   label="Password"
                   name="password"
+                  data-test="password"
                   value={form.password}
                   type="password"
                   InputProps={{
