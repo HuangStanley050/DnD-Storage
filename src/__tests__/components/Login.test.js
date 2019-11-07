@@ -10,8 +10,10 @@ describe("<Login /> test render", () => {
   let mount;
   let shallow;
   let login;
+  let loginProps = {};
   beforeEach(() => {
     login = jest.fn();
+
     mount = createMount();
     shallow = createShallow();
   });
@@ -19,21 +21,33 @@ describe("<Login /> test render", () => {
     mount.cleanUp();
   });
   it("should render the form without error", () => {
-    wrapper = shallow(
-      <Login isAuth={false} login={login} loading={false} error="" />
-    );
+    loginProps = {
+      isAuth: false,
+      login,
+      loading: false,
+      error: ""
+    };
+    wrapper = shallow(<Login {...loginProps} />);
     expect(wrapper.exists()).toBe(true);
   });
   it("should render two input fields for login form", () => {
-    wrapper = mount(
-      <Login isAuth={false} login={login} loading={false} error="" />
-    );
+    loginProps = {
+      isAuth: false,
+      login,
+      loading: false,
+      error: ""
+    };
+    wrapper = mount(<Login {...loginProps} />);
     expect(wrapper.find(TextField)).toHaveLength(2);
   });
   it("should render one input field for password, one for email", () => {
-    wrapper = mount(
-      <Login isAuth={false} login={login} loading={false} error="" />
-    );
+    loginProps = {
+      isAuth: false,
+      login,
+      loading: false,
+      error: ""
+    };
+    wrapper = mount(<Login {...loginProps} />);
     // wrapper.find(`[data-test="${val}"]`)
 
     expect(
@@ -50,21 +64,35 @@ describe("<Login /> test render", () => {
     ).toBe("password");
   });
   it("should render a loading spinner if loading props is true", () => {
-    wrapper = mount(<Login isAuth={false} login={login} loading error="" />);
+    loginProps = {
+      isAuth: false,
+      login,
+      loading: true,
+      error: ""
+    };
+    wrapper = mount(<Login {...loginProps} />);
     const loader = wrapper.find(Loader);
     expect(loader.exists()).toBe(true);
   });
   it("should not render a loading spinner if loading props is false", () => {
-    wrapper = mount(
-      <Login isAuth={false} login={login} loading={false} error="" />
-    );
+    loginProps = {
+      isAuth: false,
+      login,
+      loading: false,
+      error: ""
+    };
+    wrapper = mount(<Login {...loginProps} />);
     const loader = wrapper.find(Loader);
     expect(loader.exists()).toBe(false);
   });
   it("should trigger the login method in the props after submit form", () => {
-    wrapper = mount(
-      <Login isAuth={false} login={login} loading={false} error="" />
-    );
+    loginProps = {
+      isAuth: false,
+      login,
+      loading: true,
+      error: ""
+    };
+    wrapper = mount(<Login {...loginProps} />);
     wrapper.find("[data-test='form-submit']").simulate("submit", {
       preventDefault: () => {}
     });
