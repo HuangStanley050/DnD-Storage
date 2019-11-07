@@ -3,6 +3,7 @@ import TextField from "@material-ui/core/TextField";
 import { createMount, createShallow } from "@material-ui/core/test-utils";
 import { render } from "../../enzyme";
 import { Login } from "../../components/Login";
+import Loader from "../../components/Loader";
 
 describe("<Login /> test render", () => {
   let wrapper;
@@ -47,5 +48,27 @@ describe("<Login /> test render", () => {
         .at(1)
         .props().name
     ).toBe("password");
+  });
+  it("should render a loading spinner if loading props is true", () => {
+    wrapper = mount(<Login isAuth={false} login={login} loading error="" />);
+    const loader = wrapper.find(Loader);
+    expect(loader.exists()).toBe(true);
+  });
+  it("should not render a loading spinner if loading props is false", () => {
+    wrapper = mount(
+      <Login isAuth={false} login={login} loading={false} error="" />
+    );
+    const loader = wrapper.find(Loader);
+    expect(loader.exists()).toBe(false);
+  });
+  it("should trigger the login method in the props after submit form", () => {
+    wrapper = mount(
+      <Login isAuth={false} login={login} loading={false} error="" />
+    );
+    wrapper.find("[data-test='form-submit']").simulate("submit", {
+      preventDefault: () => {}
+    });
+
+    expect(login).toHaveBeenCalled();
   });
 });

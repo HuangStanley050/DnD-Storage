@@ -59,7 +59,7 @@ const useForm = () => {
 export const Login = props => {
   const classes = useStyles();
   const [form, handleChange, resetFields] = useForm();
-  const { isAuth, loading, error } = props;
+  const { isAuth, loading, error, login } = props;
   const submitHandler = e => {
     e.preventDefault();
     props.login(form);
@@ -73,7 +73,7 @@ export const Login = props => {
       <Paper className={classes.paper}>
         <Grid container wrap="nowrap" spacing={2}>
           <Grid item style={{ margin: "0 auto" }}>
-            <form onSubmit={submitHandler}>
+            <form data-test="form-submit" onSubmit={submitHandler}>
               <FormControl
                 style={{ width: "500px", justifyContent: "center" }}
                 className={classes.margin}
