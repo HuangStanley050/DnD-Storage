@@ -43,7 +43,7 @@ const AdapterLink = React.forwardRef((props, ref) => {
   return <RouterLink innerRef={ref} {...props} />;
 });
 
-const Navbar = props => {
+export const Navbar = props => {
   const classes = useStyles();
   const { isAuth } = props;
   const logoutLinks = (

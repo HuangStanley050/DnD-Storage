@@ -1,5 +1,4 @@
 import React from "react";
-
 import { render, mount, shallow } from "../../enzyme";
 import Landing from "../../components/Landing";
 
