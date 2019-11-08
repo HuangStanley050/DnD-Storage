@@ -49,6 +49,7 @@ export const Navbar = props => {
   const logoutLinks = (
     <Button
       component={AdapterLink}
+      data-test="login-button"
       to="/login"
       variant="contained"
       className={classes.button}
@@ -60,6 +61,7 @@ export const Navbar = props => {
   const loginLinks = (
     <>
       <Button
+        data-test="upload-button"
         component={AdapterLink}
         to="/store"
         variant="contained"
@@ -69,6 +71,7 @@ export const Navbar = props => {
         Upload
       </Button>
       <Button
+        data-test="dashboard-button"
         variant="contained"
         component={AdapterLink}
         to="/dashboard"
@@ -78,6 +81,7 @@ export const Navbar = props => {
         Dashboard
       </Button>
       <Button
+        data-test="logout-button"
         onClick={() => {
           if (window.confirm("Are you logging out?")) {
             props.logout();
