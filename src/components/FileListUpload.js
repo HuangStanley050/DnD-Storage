@@ -47,6 +47,7 @@ const FileListUpload = props => {
                   />
                   <ListItemSecondaryAction>
                     <IconButton
+                      data-test="delete-button"
                       onClick={() => props.deleteFile(file.id)}
                       edge="end"
                       aria-label="delete"
