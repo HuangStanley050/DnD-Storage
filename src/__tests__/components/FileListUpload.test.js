@@ -33,4 +33,18 @@ describe("<FileListUpload /> component testing", () => {
 
     expect(fileListUploadProps.deleteFile).toHaveBeenCalled();
   });
+  it("should render the right number of files user have drag and dropped", () => {
+    const fileListUploadProps = {
+      files: [
+        { name: "file1 ", size: 1000, id: 1 },
+        { name: "file2 ", size: 2000, id: 2 }
+      ],
+      deleteFile: jest.fn()
+    };
+    const howManyFiles = fileListUploadProps.files.length;
+    const wrapper = mount(<FileListUpload {...fileListUploadProps} />);
+    const counter = 0;
+    const node = wrapper.find("[data-test='list']");
+    console.log(node.at(0).html());
+  });
 });

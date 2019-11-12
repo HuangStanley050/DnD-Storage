@@ -32,16 +32,17 @@ const FileListUpload = props => {
     <div className={classes.root}>
       <div className={classes.demo}>
         {files.length === 0 ? null : (
-          <List dense={dense}>
+          <List data-test="list" dense={dense}>
             {files.map(file => {
               return (
-                <ListItem key={file.id}>
+                <ListItem data-test="list-item" key={file.id}>
                   <ListItemAvatar>
                     <Avatar>
                       <FolderIcon />
                     </Avatar>
                   </ListItemAvatar>
                   <ListItemText
+                    data-test="list-item-name"
                     primary={file.name}
                     secondary={`${(file.size / 1024 / 1024).toFixed(2)}MB`}
                   />
