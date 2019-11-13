@@ -6,7 +6,7 @@ import { noNeedUpdateDashBoard } from "../store/actions/uploadActions";
 import PieChartComponent from "./chart/pieChart";
 import FileList from "./chart/FileList";
 
-class DashBoard extends PureComponent {
+export class DashBoard extends PureComponent {
   componentDidMount() {
     const { length, loadData, turnOffUpdate, needUpdate } = this.props;
 

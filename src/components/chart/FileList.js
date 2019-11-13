@@ -20,7 +20,7 @@ const FileList = ({ pieData }) => {
   const classes = useStyles();
 
   return (
-    <Grid container className={classes.root} spacing={2}>
+    <Grid data-test="file-list" container className={classes.root} spacing={2}>
       <Grid item xs={12}>
         <Grid container justify="center" spacing={spacing}>
           {pieData.map(data => (

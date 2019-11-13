@@ -58,9 +58,9 @@ class PieChartComponent extends PureComponent {
     };
     const { pieData } = this.props;
     const { animate } = this.state;
-    console.log("Pie data: ", pieData);
+
     return (
-      <div style={pieChartStyle}>
+      <div data-test="pie-chart" style={pieChartStyle}>
         <PieChart width={800} height={450} onMouseEnter={this.onPieEnter}>
           <Pie
             isAnimationActive={animate}
