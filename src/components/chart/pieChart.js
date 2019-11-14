@@ -63,6 +63,7 @@ class PieChartComponent extends PureComponent {
       <div data-test="pie-chart" style={pieChartStyle}>
         <PieChart width={800} height={450} onMouseEnter={this.onPieEnter}>
           <Pie
+            data-test="pie-chart"
             isAnimationActive={animate}
             dataKey="value"
             data={pieData}
