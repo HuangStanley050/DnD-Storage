@@ -1,4 +1,5 @@
 import React from "react";
+import { BrowserRouter as Router, Link } from "react-router-dom";
 import { createMount, createShallow } from "@material-ui/core/test-utils";
 import { render } from "../../enzyme";
 import { DashBoard } from "../../components/DashBoard";
@@ -41,5 +42,33 @@ describe("<DashBoard /> testing suites", () => {
         "MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-justify-xs-center"
       ).length
     ).toBe(0);
+  });
+  it("should render the right number of <FileList /> in <DashBoard />", () => {
+    const testProps = {
+      loadData: jest.fn(),
+      turnOffUpdate: jest.fn(),
+      needUpdate: false,
+      length: 1,
+      data: [
+        // should only display 2 file types
+        { type: "stuff", files: [{ id: 1, name: "test1" }] },
+        { type: "stuff2", files: [{ id: 2, name: "test2" }] }
+      ]
+    };
+    const wrapper = mount(
+      <Router>
+        <DashBoard {...testProps} />
+      </Router>
+    );
+    const fileListNode = wrapper.find("[data-test='file-list']").children();
+
+    fileListNode.forEach(node => {
+      expect(node.hasClass("MuiGrid-root MuiGrid-item")).toBe(true);
+    });
+    // expect(
+    //   fileListNode.find(
+    //     "MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-justify-xs-center"
+    //   ).length
+    // ).toBe(testProps.data.length);
   });
 });
