@@ -34,7 +34,6 @@ const FileList = ({ pieData }) => {
                 type={data.name}
                 number={data.value}
                 className={classes.paper}
-                files={data.files}
               />
             </Grid>
           ))}
