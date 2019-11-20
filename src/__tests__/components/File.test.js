@@ -15,7 +15,7 @@ describe("<File/> testing", () => {
   it("should render with no issue", () => {
     const testProps = {
       type: "zip",
-      files: [],
+
       className: "paper",
       number: 2
     };
@@ -25,5 +25,33 @@ describe("<File/> testing", () => {
       </Router>
     );
     expect(wrapper.exists()).toBe(true);
+  });
+  it("should display the right data type on the card", () => {
+    const testProps = {
+      type: "jpg",
+      className: "paper",
+      number: 3
+    };
+    const wrapper = mount(
+      <Router>
+        <File {...testProps} />
+      </Router>
+    );
+    const typeNode = wrapper.find("[data-test='data-type']");
+    expect(typeNode.at(0).text()).toBe(testProps.type);
+  });
+  it("should display the right number of data type on the card", () => {
+    const testProps = {
+      type: "text",
+      className: "paper",
+      number: 10
+    };
+    const wrapper = mount(
+      <Router>
+        <File {...testProps} />
+      </Router>
+    );
+    const typeNode = wrapper.find("[data-test='data-type-count']");
+    expect(typeNode.at(2).text()).toBe(`Number of Files: ${testProps.number}`);
   });
 });

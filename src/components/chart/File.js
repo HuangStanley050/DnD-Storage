@@ -43,6 +43,7 @@ const File = ({ type, number }) => {
     <Card className={classes.card}>
       <CardContent>
         <Typography
+          data-test="data-type"
           style={{
             textAlign: "center",
             color: "white",
@@ -54,6 +55,7 @@ const File = ({ type, number }) => {
           {type}
         </Typography>
         <Typography
+          data-test="data-type-count"
           style={{ marginTop: "1rem", textAlign: "center", color: "white" }}
           variant="h6"
           component="h4"
