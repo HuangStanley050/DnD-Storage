@@ -40,7 +40,7 @@ const File = ({ type, number }) => {
   };
 
   return (
-    <Card className={classes.card}>
+    <Card data-test="data-File-component" className={classes.card}>
       <CardContent>
         <Typography
           data-test="data-type"
